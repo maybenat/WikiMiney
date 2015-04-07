@@ -24,7 +24,7 @@ for fn in os.listdir('.'): # loop through all files
     day_name = fn[20:22] # get day of file
     agg_name = "agg-day-" + day_name
     if os.path.isfile(agg_name):
-      print "\t%s" % fn
+      print "\taggregating %s with %s" % (fn, agg_name)
       day = ReadFileQueue(fn, "r")
       os.system("mv %s %s.temp" % (agg_name, agg_name))
       old_agg = ReadFileQueue(agg_name + ".temp", "r")
@@ -44,13 +44,26 @@ for fn in os.listdir('.'): # loop through all files
           ag = a[0] + "-" + a[1]  # 'project-page_name'
 
         if ag and da:
-          if ag == da:  # same exact page
-            old_agg.pop()
+          if a[0] == "en" and d[0] != "en":
             day.pop()
-            view = int(a[2]) + int(d[2])
-            byte = int(a[3]) + int(d[3])
-            line = "%s %s %d %d\n" % (a[0], a[1], view, byte)
-          elif ag > da:  # old_agg queue is ahead of day queue
+            line = "%s" % d_line
+          elif a[0] != "en" and d[0] == "en":
+            old_agg.pop()
+            line = "%s" % a_line
+          elif d[0] == a[0]:
+            if d[1] == a[1]:  # same exact page
+              old_agg.pop()
+              day.pop()
+              view = int(a[2]) + int(d[2])
+              byte = int(a[3]) + int(d[3])
+              line = "%s %s %d %d\n" % (a[0], a[1], view, byte)
+            elif a[1] > d[1]:  # old_agg queue is ahead of day queue
+              day.pop()
+              line = "%s" % d_line
+            else:  # old_agg queue is behind day queuee
+              old_agg.pop()
+              line = "%s" % a_line
+          elif a[0] > d[0]:  # old_agg queue is ahead of day queue
             day.pop()
             line = "%s" % d_line
           else:  # old_agg queue is behind day queuee
@@ -70,7 +83,7 @@ for fn in os.listdir('.'): # loop through all files
       old_agg.close()
       os.system("rm %s.temp" % agg_name)
     else:
-      print "%s\n\t%s" % (day_name, fn)
+      print "%s\n\tinitializing %s with %s" % (day_name, agg_name, fn)
       day = open(fn, "r")
       new_agg = open(agg_name, "w")
       for line in day:
