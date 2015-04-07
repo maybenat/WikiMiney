@@ -28,7 +28,7 @@ Go to [localhost:3000](localhost:3000) to see some stuff
 
 ### Reviews
 "An interactive... WikiMiney."
-- Natalie McMullen
+    * Natalie McMullen
 
 "No Results for WikiMiney... Check the spelling or try alternate spellings."
-- Yelp
+    * Yelp

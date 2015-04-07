@@ -25,6 +25,7 @@ doc/
 .DS_Store
 
 # Ignore all data
-/data
+en-pagecounts-*
+*.db
 
 .rvmrc

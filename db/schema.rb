@@ -13,13 +13,24 @@
 
 ActiveRecord::Schema.define(version: 20150330234351) do
 
-  create_table "wikis", force: true do |t|
+  create_table "wikipages", force: true do |t|
     t.string   "project"
     t.string   "page"
-    t.integer  "views",      limit: 8
-    t.integer  "bytes",      limit: 8
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "wikiviews", force: true do |t|
+    t.integer  "wikipage_id"
+    t.string   "year"
+    t.string   "month"
+    t.string   "day"
+    t.integer  "views",       limit: 8
+    t.integer  "bytes",       limit: 8
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "wikiviews", ["wikipage_id"], name: "index_wikiviews_on_wikipage_id"
 
 end
