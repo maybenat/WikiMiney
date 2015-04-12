@@ -1,0 +1,21 @@
+<%= @wiki.project %> <%= @wiki.page %>
+
+<table>
+  <tr>
+    <th>Views</th>
+    <th>Total Bytes</th>
+    <th>Month</th>
+    <th>Day</th>
+    <th>Year</th>
+    <th colspan="6"></th>
+  </tr>
+  <% @wiki.wikiviews.each do |view| %>
+    <tr>
+      <td><%= view.views %></td>
+      <td><%= view.bytes %></td>
+      <td><%= view.month %></td>
+      <td><%= view.day %></td>
+      <td><%= view.year %></td>
+    </tr>
+  <% end %>
+</table>

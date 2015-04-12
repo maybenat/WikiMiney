@@ -11,9 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150330234351) do
+ActiveRecord::Schema.define(version: 20150412173050) do
 
-  create_table "wikipages", force: true do |t|
+  create_table "clusters", force: true do |t|
+    t.string   "project"
+    t.string   "page"
+    t.string   "year"
+    t.string   "month"
+    t.integer  "views",      limit: 8
+    t.integer  "bytes",      limit: 8
+    t.string   "cluster"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "wikis", force: true do |t|
     t.string   "project"
     t.string   "page"
     t.datetime "created_at"
@@ -21,16 +33,16 @@ ActiveRecord::Schema.define(version: 20150330234351) do
   end
 
   create_table "wikiviews", force: true do |t|
-    t.integer  "wikipage_id"
+    t.integer  "wiki_id"
     t.string   "year"
     t.string   "month"
     t.string   "day"
-    t.integer  "views",       limit: 8
-    t.integer  "bytes",       limit: 8
+    t.integer  "views",      limit: 8
+    t.integer  "bytes",      limit: 8
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "wikiviews", ["wikipage_id"], name: "index_wikiviews_on_wikipage_id"
+  add_index "wikiviews", ["wiki_id"], name: "index_wikiviews_on_wiki_id"
 
 end

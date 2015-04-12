@@ -1,15 +1,9 @@
-class Wiki < ActiveRecord::Base
+class Cluster < ActiveRecord::Base
   validates :project, presence: true
   validates :page, presence: true
-  has_many :wikiviews, dependent: :destroy
-end
-
-
-class Wikiview < ActiveRecord::Base
-  belongs_to :wiki
   validates :year, presence: true
   validates :month, presence: true
-  validates :day, presence: true
   validates :views, presence: true
   validates :bytes, presence: true
+  validates :cluster, presence: true
 end
