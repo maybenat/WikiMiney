@@ -28,5 +28,6 @@ doc/
 stripped-agg-*
 *.db
 
-.rvmrc*
+.rvmrc
+.rvmrc.*
 rvm
