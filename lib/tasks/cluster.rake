@@ -1,7 +1,7 @@
-namespace :cluster do
+namespace :init do
   desc "Adds month data from text file to cluster table"
   task :add_cluster => :environment do
-    @input = File.open('./data/2008/10/stripped-agg-cluster')
+    @input = File.open('lib/tasks/data/2008/10/stripped-agg-cluster')
     @input.each_line do |line|
       line = line[0, line.length - 1].split(' ')
       proj = line[0]

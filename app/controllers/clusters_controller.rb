@@ -1,5 +1,5 @@
 class ClustersController < ApplicationController
   def index
-    @clusters = Cluster.all
+    @clusters = Cluster.take(50)
   end
 end

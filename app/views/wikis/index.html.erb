@@ -4,14 +4,12 @@
   <tr>
     <th>Project</th>
     <th>Page</th>
-    <th colspan="3"></th>
   </tr>
  
   <% @wikis.each do |wiki| %>
     <tr>
       <td><%= wiki.project %></td>
-      <td><%= wiki.page %></td>
-      <td><%= link_to 'Show', wiki_path(wiki) %></td>
+      <td><%= link_to wiki.page, wiki_path(wiki) %></td>
     </tr>
   <% end %>
 </table>

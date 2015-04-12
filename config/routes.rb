@@ -9,14 +9,18 @@ Rails.application.routes.draw do
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
+  get 'data/year/:year/month/:month/top/:size' => 'wikis#top'
+  get 'data/page/:page' => 'wikis#search'
+  get 'data/page/:page/year/:year/month/:month' => 'wikis#page_month'
+  get 'data/cluster/2008/october' => 'wikis#cluster'
 
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
 
   # Example resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
-  resources :wikis
-  resources :clusters
+  resources :wikis  # comment out once above gets are set up correctly
+  resources :clusters  # comment out once above gets are set up correctly
 
   # Example resource route with options:
   #   resources :products do
