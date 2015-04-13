@@ -17,7 +17,7 @@ expected to contain everything.
 
 ```
 git clone https://github.com/nataliemcmullen/WikiMiney.git wikiminey
-cp -r data wikiminey/lib/tasks/data
+**cp -r data wikiminey/lib/tasks/data** - copy all data to the existing single file
 cd wikiminey
 rvm use --create --rvmrc 2.2@wikiminey
 rvm rvmrc warning ignore '/path/to/wikiminey/.rvmrc'
@@ -25,7 +25,7 @@ bundle install
 rake db:create
 rake db:migrate
 rake init:add_wikis
-rake init:add_cluster
+**rake init:add_cluster** - ignore for now
 rails server
 ```
 The rake init:add_wikis command will take a long time to populate the database
