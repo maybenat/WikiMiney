@@ -35,6 +35,7 @@ Go to localhost:3000 to see some stuff
 ### Useful Links
 * [Wikimedia Help](http://wikitech.wikimedia.org/wiki/Analytics/Data/Pagecounts-raw)
 * [Rails Getting Started](http://guides.rubyonrails.org/getting_started.html)
+* [Remaining TODO Development](todo.md)
 
 
 ### Authors
