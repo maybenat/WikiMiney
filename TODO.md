@@ -10,5 +10,6 @@
 
 ### Frontend
 * Make some placeholding, but nice looking html pages
+* Bootstrap?
 * Add any highchart gems
 * Get some fancy looking graphs of stuffz
