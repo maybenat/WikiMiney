@@ -7,13 +7,11 @@ data. We soon hope to have the site up and running with AWS [here](#).
 
 ### Dependencies
 * [RVM](http://rvm.io)
-* [Wikimedia Dumps](http://dumps.wikimedia.org/other/pagecounts-raw)
 
 
 ### Getting This Rails App Running Locally
-Processing all of the data has taken enormous effort. We currently have a directory of processed data
-sitting in a directory on AWS. In the steps below, the directory copied to wikiminey/lib/tasks/data is
-expected to contain everything.
+Processing all of the data has taken enormous effort. We currently have a directory of preprocessed data
+sitting in a directory on AWS.
 
 ```
 git clone https://github.com/nataliemcmullen/WikiMiney.git wikiminey
@@ -23,7 +21,9 @@ rvm rvmrc warning ignore '/path/to/wikiminey/.rvmrc'
 bundle install
 ```
 
-Follow instructions in [Data Download](DATA_DL.md). This will take a LONG time - weeks.
+Follow instructions in [Data Download](DATA_DL.md). This will take a LONG time to get actual data.
+The rake db:setup command will take a long time to populate the database if you followed the scripts in the
+Data Download wiki for all six months
 
 ```
 rake db:migrate
@@ -31,12 +31,11 @@ rake db:setup
 rails server
 ```
 
-The rake db:setup command will take a very long time to populate the database if you copied a lot of data
-to db/data. Like let it run overnight.
 Go to localhost:3000 to see some stuff
 
 
 ### Useful Links
+* [Wikimedia Dumps](http://dumps.wikimedia.org/other/pagecounts-raw)
 * [Wikimedia Help](http://wikitech.wikimedia.org/wiki/Analytics/Data/Pagecounts-raw)
 * [Rails Getting Started](http://guides.rubyonrails.org/getting_started.html)
 * [Remaining TODO Development](TODO.md)

@@ -22,8 +22,8 @@ We selected six months to process October, November, and December of 2008 and 20
 ### To Execute
 The following scripts need to be executed in this exact order. The final text files
 will be located in an inner ready-for-db/ directory. Each set of scripts can be found
-in db/data/<year>/<month>.
-When rake:seed is called, the files within db/data/<year>/<month>/ready-for-db will be
+in db/data/*year*/*month*.
+When rake:seed is called, the files within db/data/*year*/*month*/ready-for-db will be
 added to a SQLite3 database
 
 Note: This will seriously take weeks and about 1.3TB, initially. Be prepared.
