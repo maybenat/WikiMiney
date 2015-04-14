@@ -51,6 +51,8 @@ Go to localhost:3000 to see some stuff
 * [Remaining TODO Development](TODO.md)
 * [Highcharts-rails](http://github.com/PerfectlyNormal/highcharts-rails)
 * [Bootstrap-rails](https://github.com/seyhunak/twitter-bootstrap-rails)
+* [Deploy Rails to AWS](http://dennissuratna.com/rails-deployment-aws1)
+* [AWS ELB Docs](http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_Ruby_rails.html)
 
 
 ### Authors
