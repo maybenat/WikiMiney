@@ -14,222 +14,226 @@
 <style>
 h1 {
     font-family: 'Muli', sans-serif;
+    size: 20px;
 }
 </style>
 <script>
 // $(function() {
-function doData(inputty) {
-        var pages, jsonData, frequencies, drilldownSeries, pagesData, date, dayData, pX, pY, regress;
-
-        var json = $.getJSON("http://localhost:3000/data/year/2008/month/10/top/+" + inputty,
-            function() {
-                jsonData = json.responseJSON;
-                arr = [];
-                frequencies = [];
-                pages = [];
-                pagesData = [];
-                drilldownSeries = [];
-                date = [];
-                dayData = [];
-                pX = [];
-                pY = [];
-                regress = [];
-
-                for (var j in jsonData) {
-                    pages[j] = jsonData[j].page;
-                    test = [];
-                    test = jsonData[j].wikiviews[0].views;
-                    frequencies[j] = test;
-
-                    for (var k in jsonData[j].wikiviews) {
-                        if (!date[jsonData[j].page]) {
-                            date[jsonData[j].page] = [];
-                        }
-                        var day = jsonData[j].wikiviews[k].day;
-                        date[jsonData[j].page].push(day, jsonData[j].wikiviews[k].views);
-                        if (!dayData[jsonData[j].page]) {
-                            dayData[jsonData[j].page] = [];
-                        }
-                        var numViews = jsonData[j].wikiviews[k].views;
-
-                        dayData[jsonData[j].page].push(numViews);
-
-                        drilldownSeries.push({
-                            name: pages[j],
-                            id: pages[j],
-                            data: dayData[jsonData[j].page]
-                        });
-
-                        regress.push({
-                            name: pages[j],
-                            id: pages[j],
-                            x: parseFloat(day),
-                            y: parseFloat(numViews)
-                        });
-                        // pointsNStuff.push({
-                        //     name: pages[j],
-                        //     id: pages[j],
-                        //     x: day,
-                        //     y: dayData[jsonData[j].page]
-                        // });
+function doData(month, numIn) {
+    var pages, jsonData, frequencies, drilldownSeries, pagesData, date, dayData, pX, pY, regress;
 
 
 
+    var json = $.getJSON("http://localhost:3000/data/year/2008/month/" + month + "/top/" + numIn,
+        function() {
+            jsonData = json.responseJSON;
+            arr = [];
+            frequencies = [];
+            pages = [];
+            pagesData = [];
+            drilldownSeries = [];
+            date = [];
+            dayData = [];
+            pX = [];
+            pY = [];
+            regress = [];
+
+            for (var j in jsonData) {
+                pages[j] = jsonData[j].page;
+                test = [];
+                test = jsonData[j].wikiviews[0].views;
+                frequencies[j] = test;
+
+                for (var k in jsonData[j].wikiviews) {
+                    if (!date[jsonData[j].page]) {
+                        date[jsonData[j].page] = [];
                     }
+                    var day = jsonData[j].wikiviews[k].day;
+                    date[jsonData[j].page].push("MONTH", jsonData[j].wikiviews[k].views);
+                    if (!dayData[jsonData[j].page]) {
+                        dayData[jsonData[j].page] = [];
+                    }
+                    var numViews = jsonData[j].wikiviews[k].views;
 
-                    pagesData.push({
+                    dayData[jsonData[j].page].push(numViews);
+
+                    drilldownSeries.push({
                         name: pages[j],
-                        y: frequencies[j],
-                        drilldown: date[pages[j]] ? pages[j] : null
+                        id: pages[j],
+                        data: dayData[jsonData[j].page]
                     });
 
-                    console.log(dayData[jsonData[j].page]);
+                    // pointsNStuff.push({
+                    //     name: pages[j],
+                    //     id: pages[j],
+                    //     x: day,
+                    //     y: dayData[jsonData[j].page]
+                    // });
+
+
 
                 }
 
-                // Create the chart
-                $('#container').highcharts({
-                    chart: {
-                        type: 'column'
-                    },
-                    title: {
-                        text: 'Wiki Views'
-                    },
-                    // xAxis: {
-                    //     type: 'category'
-                    // },
-                    yAxis: {
-                        title: {
-                            text: 'Total Views'
-                        }
-                    },
 
-                    legend: {
-                        enabled: true
-                    },
-
-                    plotOptions: {
-                        spline: {
-                            shadow: false,
-                            marker: {
-                                radius: 1
-                            }
-                        },
-                        areaspline: {
-                            color: 'rgb(69, 114, 167)',
-                            fillColor: 'rgba(69, 114, 167,.25)',
-                            shadow: false,
-                            marker: {
-                                radius: 1
-                            }
-
-                        },
-                        series: {
-                            borderWidth: 0,
-                            dataLabels: {
-                                enabled: true
-                            }
-                        }
-                    },
-
-                    series: [{
-                        name: 'Frequencies',
-                        colorByPoint: true,
-                        data: pagesData,
-                        // }],
-                    }, {
-                        name: 'Curve',
-                        type: 'spline',
-                        visible: false,
-                        data: frequencies,
-                        //color: 'rgba(204,204,255,.85)'
-                    }, {
-                        name: 'Filled Curve',
-                        type: 'areaspline',
-                        visible: false,
-                        data: frequencies,
-                        //color: 'rgba(204,204,255,.85)'
-                    }],
-
-                    drilldown: {
-                        series: drilldownSeries,
-                        id: 'primary'
-                    }
-
-
+                regress.push({
+                    name: pages[j],
+                    id: pages[j],
+                    x: parseFloat(dayData[jsonData[j].page]),
+                    y: parseFloat(numViews)
                 });
 
-                $('#container2').highcharts({
-                    chart: {
-                        type: 'scatter',
-                        zoomType: 'xy'
-                    },
+                pagesData.push({
+                    name: pages[j],
+                    y: frequencies[j],
+                    drilldown: date[pages[j]] ? pages[j] : null
+                });
+
+
+            }
+
+            // Create the chart
+            $('#container').highcharts({
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: 'Wiki Views'
+                },
+                // xAxis: {
+                //     type: 'category'
+                // },
+                yAxis: {
                     title: {
-                        text: 'Page Views Vs Page Size'
-                    },
-                    xAxis: {
-                        title: {
-                            enabled: true,
-                            text: 'Day'
-                        },
-                        showLastLabel: true
-                    },
-                    yAxis: {
-                        title: {
-                            text: 'Views'
+                        text: 'Total Views'
+                    }
+                },
+
+                legend: {
+                    enabled: true
+                },
+
+                plotOptions: {
+                    spline: {
+                        shadow: false,
+                        marker: {
+                            radius: 1
                         }
                     },
-                    legend: {
-                        layout: 'vertical',
-                        align: 'left',
-                        verticalAlign: 'top',
-                        // x: 100,
-                        // y: 70,
-                        floating: true,
-                        backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF',
-                        borderWidth: 1
+                    areaspline: {
+                        color: 'rgb(69, 114, 167)',
+                        fillColor: 'rgba(69, 114, 167,.25)',
+                        shadow: false,
+                        marker: {
+                            radius: 1
+                        }
+
                     },
-                    plotOptions: {
-                        scatter: {
-                            marker: {
-                                radius: 5,
-                                states: {
-                                    hover: {
-                                        enabled: true,
-                                        lineColor: 'rgb(100,100,100)'
-                                    }
-                                }
-                            },
+                    series: {
+                        borderWidth: 0,
+                        dataLabels: {
+                            enabled: false
+                        }
+                    }
+                },
+
+                series: [{
+                    name: 'Frequencies',
+                    colorByPoint: true,
+                    data: pagesData,
+                    // }],
+                }, {
+                    name: 'Curve',
+                    type: 'spline',
+                    visible: false,
+                    data: frequencies,
+                    //color: 'rgba(204,204,255,.85)'
+                }, {
+                    name: 'Filled Curve',
+                    type: 'areaspline',
+                    visible: false,
+                    data: frequencies,
+                    //color: 'rgba(204,204,255,.85)'
+                }],
+
+                drilldown: {
+                    series: drilldownSeries,
+                    id: 'primary'
+                }
+
+
+            });
+
+            $('#container2').highcharts({
+                chart: {
+                    type: 'scatter',
+                    zoomType: 'xy'
+                },
+                title: {
+                    text: 'Page Views Vs Page Size'
+                },
+                xAxis: {
+                    title: {
+                        enabled: true,
+                        text: 'Day'
+                    },
+                    showLastLabel: true
+                },
+                yAxis: {
+                    title: {
+                        text: 'Views'
+                    }
+                },
+                legend: {
+                    layout: 'vertical',
+                    align: 'left',
+                    verticalAlign: 'top',
+                    // x: 100,
+                    // y: 70,
+                    floating: true,
+                    backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF',
+                    borderWidth: 1
+                },
+                plotOptions: {
+                    scatter: {
+                        marker: {
+                            radius: 5,
                             states: {
                                 hover: {
-                                    marker: {
-                                        enabled: false
-                                    }
+                                    enabled: true,
+                                    lineColor: 'rgb(100,100,100)'
                                 }
-                            },
-                            tooltip: {
-                                headerFormat: '<b>{series.name}</b><br>',
-                                pointFormat: 'Day: {point.x}, {point.y} views'
                             }
-                        }
-                    },
-                    series: [{
-                        regression: true,
-                        regressionSettings: {
-                            type: 'linear',
-                            color: 'rgba(223, 83, 83, .9)'
                         },
-                        colorByPoint: true,
-                        data: regress,
-                        // }],
-                    }],
+                        states: {
+                            hover: {
+                                marker: {
+                                    enabled: false
+                                }
+                            }
+                        },
+                        tooltip: {
+                            headerFormat: '<b>{series.name}</b><br>',
+                            pointFormat: 'Day: {point.x}, {point.y} views'
+                        }
+                    }
+                },
+                series: [{
+                    regression: true,
+                    regressionSettings: {
+                        type: 'linear',
+                        color: 'rgba(223, 83, 83, .9)'
+                    },
+                    colorByPoint: true,
+                    data: regress,
+                    // }],
+                }],
 
-                });
+            });
 
-            })
+        })
 
-    }
-    doData(10);
+}
+doData(10, 10);
 </script>
 <center>
     <h1>Pages:</h1>
@@ -238,7 +242,7 @@ function doData(inputty) {
         <script>
         $('#2').on('click', function(e) {
 
-            doData(2);
+            doData(10, 2);
 
         })
         </script>
@@ -246,7 +250,7 @@ function doData(inputty) {
         <script>
         $('#5').on('click', function(e) {
 
-            doData(5);
+            doData(10, 5);
 
         })
         </script>
@@ -254,7 +258,7 @@ function doData(inputty) {
         <script>
         $('#10').on('click', function(e) {
 
-            doData(10);
+            doData(10, 10);
 
         })
         </script>
@@ -262,7 +266,7 @@ function doData(inputty) {
         <script>
         $('#15').on('click', function(e) {
 
-            doData(15);
+            doData(10, 15);
 
         })
         </script>
@@ -270,7 +274,7 @@ function doData(inputty) {
         <script>
         $('#20').on('click', function(e) {
 
-            doData(20);
+            doData(10, 20);
 
         })
         </script>
@@ -278,7 +282,7 @@ function doData(inputty) {
         <script>
         $('#30').on('click', function(e) {
 
-            doData(30);
+            doData(10, 30);
 
         })
         </script>
@@ -286,11 +290,41 @@ function doData(inputty) {
         <script>
         $('#40').on('click', function(e) {
 
-            doData(40);
+            doData(10, 40);
+
+        })
+        </script>
+    </div>
+</center>
+<center>
+    <h1>Month:</h1>
+    <div class="btn-group btn-group-lg">
+        <button id="ten" class="btn btn-primary">10</button>
+        <script>
+        $('#ten').on('click', function(e) {
+
+            doData(10, 10);
+
+        })
+        </script>
+        <button id="eleven" class="btn btn-primary">11</button>
+        <script>
+        $('#eleven').on('click', function(e) {
+
+            doData(11, 10);
+
+        })
+        </script>
+        <button id="twelve" class="btn btn-primary">12</button>
+        <script>
+        $('#12').on('click', function(e) {
+
+            doData(12, 10);
 
         })
         </script>
     </div>
 </center>
 <div id="container" style="height: 400px; min-width: 310px"></div>
+<h1>&nbsp;</h1>
 <div id="container2" style="height: 400px; min-width: 310px"></div>
