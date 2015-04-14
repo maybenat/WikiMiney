@@ -2,14 +2,13 @@
   <a href="http://<%= @project %>.org/wiki/<%= @wiki.page %>"><%= @wiki.project %> <%= @wiki.page %></a>
 </h1>
 
-<table>
+<table class="table table-striped">
   <tr>
     <th>Views</th>
     <th>Total Bytes</th>
     <th>Month</th>
     <th>Day</th>
     <th>Year</th>
-    <th colspan="6"></th>
   </tr>
   <% @wiki.wikiviews.each do |view| %>
     <tr>

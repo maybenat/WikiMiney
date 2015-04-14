@@ -50,6 +50,7 @@ Go to localhost:3000 to see some stuff
 * [Rails Getting Started](http://guides.rubyonrails.org/getting_started.html)
 * [Remaining TODO Development](TODO.md)
 * [Highcharts-rails](http://github.com/PerfectlyNormal/highcharts-rails)
+* [Bootstrap-rails](https://github.com/seyhunak/twitter-bootstrap-rails)
 
 
 ### Authors

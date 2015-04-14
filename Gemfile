@@ -39,3 +39,4 @@ gem 'spring',        group: :development
 # gem 'debugger', group: [:development, :test]
 
 gem 'highcharts-rails', '~> 4.1.4'
+gem 'twitter-bootstrap-rails'
