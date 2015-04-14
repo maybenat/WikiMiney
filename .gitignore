@@ -25,7 +25,10 @@ doc/
 .DS_Store
 
 # Ignore all data
+pagecounts-20*
+en-pagecounts-*
 stripped-agg-*
+agg-day-*
 *.db
 
 .rvmrc

@@ -1,5 +1,5 @@
 <h1>
-  <a href="http://<%= @wiki.project %>.wikipedia.org/wiki/<%= @wiki.page %>"><%= @wiki.project %> <%= @wiki.page %></a>
+  <a href="http://<%= @project %>.org/wiki/<%= @wiki.page %>"><%= @wiki.project %> <%= @wiki.page %></a>
 </h1>
 
 <table>
@@ -14,7 +14,7 @@
   <% @wiki.wikiviews.each do |view| %>
     <tr>
       <td><%= view.views %></td>
-      <td><%= view.bytes %></td>
+      <td><%= view.bytes / view.views %></td>
       <td><%= view.month %></td>
       <td><%= view.day %></td>
       <td><%= view.year %></td>

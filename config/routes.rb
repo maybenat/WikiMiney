@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
   get 'data/year/:year/month/:month/top/:size' => 'wikis#top'
-  get 'data/page/:page' => 'wikis#search'
+  get 'data/project/:project/page/:page' => 'wikis#search', :constraints => { :project => /[^\/]+/, :page => /[^\/]+/ }
   get 'data/page/:page/year/:year/month/:month' => 'wikis#page_month'
   get 'data/cluster/2008/october' => 'wikis#cluster'
   #get 'data/cluster/2008/october' => 'clusters#cluster'

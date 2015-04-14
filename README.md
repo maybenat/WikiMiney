@@ -17,18 +17,22 @@ expected to contain everything.
 
 ```
 git clone https://github.com/nataliemcmullen/WikiMiney.git wikiminey
-**cp -r data wikiminey/lib/tasks/data** - copy all data to the existing single file
 cd wikiminey
 rvm use --create --rvmrc 2.2@wikiminey
 rvm rvmrc warning ignore '/path/to/wikiminey/.rvmrc'
 bundle install
-rake db:create
+```
+
+Follow instructions in [Data Download](DATA_DL.md). This will take a LONG time - weeks.
+
+```
 rake db:migrate
-rake init:add_wikis
-**rake init:add_cluster** - ignore for now
+rake db:setup
 rails server
 ```
-The rake init:add_wikis command will take a long time to populate the database
+
+The rake db:setup command will take a very long time to populate the database if you copied a lot of data
+to db/data. Like let it run overnight.
 Go to localhost:3000 to see some stuff
 
 
