@@ -21,6 +21,16 @@ rvm rvmrc warning ignore '/path/to/wikiminey/.rvmrc'
 bundle install
 ```
 
+If you have access to our AWS account just do
+
+```
+rake db:create
+rake db:migrate
+scp <aws_ip>:sqlite_snapshots/<x>.sqlite3 db/development.sqlite3
+rails server
+```
+
+Otherwise,
 Follow instructions in [Data Download](DATA_DL.md). This will take a LONG time to get actual data.
 The rake db:setup command will take a long time to populate the database if you followed the scripts in the
 Data Download wiki for all six months
@@ -39,6 +49,7 @@ Go to localhost:3000 to see some stuff
 * [Wikimedia Help](http://wikitech.wikimedia.org/wiki/Analytics/Data/Pagecounts-raw)
 * [Rails Getting Started](http://guides.rubyonrails.org/getting_started.html)
 * [Remaining TODO Development](TODO.md)
+* [Highcharts-rails](http://github.com/PerfectlyNormal/highcharts-rails)
 
 
 ### Authors
