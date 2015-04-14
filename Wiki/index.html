@@ -2,14 +2,14 @@
 </script>
 <script src="http://code.highcharts.com/highcharts.js"></script>
 <script src="http://code.highcharts.com/modules/drilldown.js"></script>
+<script src="../highcharts-regression.js">
 </script>
 <script>
 $(function() {
-    var pages, jsonData, frequencies, drilldownSeries, pagesData, date, dayData;
+    var pages, jsonData, frequencies, drilldownSeries, pagesData, date, dayData, pX, pY, regress;
 
-    var json = $.getJSON("http://localhost:3000/data/year/2008/month/10/top/10", function() {
+    var json = $.getJSON("http://localhost:3000/data/year/2008/month/10/top/30", function() {
         jsonData = json.responseJSON;
-        console.log(jsonData);
         arr = [];
         frequencies = [];
         pages = [];
@@ -17,6 +17,9 @@ $(function() {
         drilldownSeries = [];
         date = [];
         dayData = [];
+        pX = [];
+        pY = [];
+        regress = [];
 
         for (var j in jsonData) {
             pages[j] = jsonData[j].page;
@@ -25,12 +28,10 @@ $(function() {
             frequencies[j] = test;
 
             for (var k in jsonData[j].wikiviews) {
-                //console.log(jsonData[j].wikiviews[k].views);
                 if (!date[jsonData[j].page]) {
                     date[jsonData[j].page] = [];
                 }
                 var day = jsonData[j].wikiviews[k].day;
-                console.log(day);
                 date[jsonData[j].page].push(day, jsonData[j].wikiviews[k].views);
                 if (!dayData[jsonData[j].page]) {
                     dayData[jsonData[j].page] = [];
@@ -45,6 +46,21 @@ $(function() {
                     data: dayData[jsonData[j].page]
                 });
 
+                regress.push({
+                    name: pages[j],
+                    id: pages[j],
+                    x: parseFloat(day),
+                    y: parseFloat(numViews)
+                });
+                // pointsNStuff.push({
+                //     name: pages[j],
+                //     id: pages[j],
+                //     x: day,
+                //     y: dayData[jsonData[j].page]
+                // });
+
+
+
             }
 
             pagesData.push({
@@ -53,9 +69,10 @@ $(function() {
                 drilldown: date[pages[j]] ? pages[j] : null
             });
 
+            console.log(dayData[jsonData[j].page]);
+
         }
 
-        console.log(dayData["Sarah_Palin"]);
         // Create the chart
         $('#container').highcharts({
             chart: {
@@ -67,12 +84,11 @@ $(function() {
             // xAxis: {
             //     type: 'category'
             // },
-            yAxis:
-            {
+            yAxis: {
                 title: {
-                        text: 'Total Views'
-                    }
-                },
+                    text: 'Total Views'
+                }
+            },
 
             legend: {
                 enabled: true
@@ -106,7 +122,7 @@ $(function() {
                 name: 'Frequencies',
                 colorByPoint: true,
                 data: pagesData,
-            // }],
+                // }],
             }, {
                 name: 'Curve',
                 type: 'spline',
@@ -120,13 +136,88 @@ $(function() {
                 data: frequencies,
                 //color: 'rgba(204,204,255,.85)'
             }],
+
             drilldown: {
-                series: drilldownSeries
+                series: drilldownSeries,
+                id: 'primary'
             }
+
+
         });
+
+        $('#container2').highcharts({
+            chart: {
+                type: 'scatter',
+                zoomType: 'xy'
+            },
+            title: {
+                text: 'Page Views Vs Page Size'
+            },
+            xAxis: {
+                title: {
+                    enabled: true,
+                    text: 'Size (bytes)'
+                },
+                startOnTick: true,
+                endOnTick: true,
+                showLastLabel: true
+            },
+            yAxis: {
+                title: {
+                    text: 'Views'
+                }
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'left',
+                verticalAlign: 'top',
+                // x: 100,
+                // y: 70,
+                floating: true,
+                backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF',
+                borderWidth: 1
+            },
+            plotOptions: {
+                scatter: {
+                    marker: {
+                        radius: 5,
+                        states: {
+                            hover: {
+                                enabled: true,
+                                lineColor: 'rgb(100,100,100)'
+                            }
+                        }
+                    },
+                    states: {
+                        hover: {
+                            marker: {
+                                enabled: false
+                            }
+                        }
+                    },
+                    tooltip: {
+                        headerFormat: '<b>{series.name}</b><br>',
+                        pointFormat: 'Day: {point.x}, {point.y} views'
+                    }
+                }
+            },
+            series: [{
+                regression: true,
+                regressionSettings: {
+                    type: 'linear',
+                    color: 'rgba(223, 83, 83, .9)'
+                },
+                colorByPoint: true,
+                data: regress,
+                // }],
+            }],
+
+        });
+
     })
 
 
 });
 </script>
 <div id="container" style="height: 400px; min-width: 310px"></div>
+<div id="container2" style="height: 400px; min-width: 310px"></div>
