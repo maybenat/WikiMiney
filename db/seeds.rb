@@ -11,23 +11,26 @@ paths = [
 ]
 
 paths.each do |path|
-  Dir.foreach(path) do |item|
-    if item[0, 13] == "stripped-agg-" 
-      year = path.split('/')[2]
-      month = path.split('/')[3]
-      if item[0, 17] == "stripped-agg-day-"
-        day = item[17, 19]
-      else
-        day = "all"
-      end
-      input = File.open(path + item)
-      puts "Starting %s/%s/%s - %s" % [month, day, year, path + item]
-      input.each_line do |line|
-        line = line[0, line.length - 1].split(' ')
-        view = line[2].to_i
-        byte = line[3].to_i
-        wiki = Wiki.find_or_create_by(:project => line[0], :page => line[1])
-        wiki.wikiviews.create(:year => year, :month => month, :day => day, :views => view, :bytes => byte)
+  if Dir.exists?(path)
+    Dir.foreach(path) do |item|
+      if item[0, 13] == "stripped-agg-"
+        year = path.split('/')[2]
+        month = path.split('/')[3]
+        if item[0, 17] == "stripped-agg-day-"
+          day = item[17, 19]
+        else
+          day = "all"
+        end
+        input = File.open(path + item)
+        puts "Starting %s/%s/%s - %s" % [month, day, year, path + item]
+        input.each_line do |line|
+          line = line[0, line.length - 1].encode('UTF-8', 'binary', invalid: :replace, undef: :replace, replace: '').split(' ')
+          page = line[1].encode('UTF-8', 'binary', invalid: :replace, undef: :replace, replace: '')
+          view = line[2].to_i
+          byte = line[3].to_i
+          wiki = Wiki.find_or_create_by(:project => line[0], :page => page)
+          wiki.wikiviews.create(:year => year, :month => month, :day => day, :views => view, :bytes => byte)
+        end
       end
     end
   end
