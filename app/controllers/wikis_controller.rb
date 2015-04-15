@@ -6,6 +6,10 @@ class WikisController < ApplicationController
     "Special:Randompage",
     "Special:Watchlist",
     "Special:Export",
+    "Main_Page",
+    "MainPage",
+    "index.html",
+    "Wiki",
   ]
 
   def index

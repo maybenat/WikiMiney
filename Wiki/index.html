@@ -12,17 +12,15 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 <link href='http://fonts.googleapis.com/css?family=Muli:300' rel='stylesheet' type='text/css'>
 <style>
-h1 {
+customy {
     font-family: 'Muli', sans-serif;
-    size: 20px;
+    size: 15px;
 }
 </style>
 <script>
 // $(function() {
 function doData(month, numIn) {
-    var pages, jsonData, frequencies, drilldownSeries, pagesData, date, dayData, pX, pY, regress;
-
-
+    var pages, jsonData, frequencies, drilldownSeries, pagesData, date, dayData, regress, byteSize, byteArr;
 
     var json = $.getJSON("http://localhost:3000/data/year/2008/month/" + month + "/top/" + numIn,
         function() {
@@ -30,12 +28,12 @@ function doData(month, numIn) {
             arr = [];
             frequencies = [];
             pages = [];
+            byteSize = [];
             pagesData = [];
             drilldownSeries = [];
             date = [];
             dayData = [];
-            pX = [];
-            pY = [];
+            byteArr = [];
             regress = [];
 
             for (var j in jsonData) {
@@ -43,6 +41,7 @@ function doData(month, numIn) {
                 test = [];
                 test = jsonData[j].wikiviews[0].views;
                 frequencies[j] = test;
+
 
                 for (var k in jsonData[j].wikiviews) {
                     if (!date[jsonData[j].page]) {
@@ -56,31 +55,46 @@ function doData(month, numIn) {
                         }
                         var numViews = jsonData[j].wikiviews[k].views;
 
+                        var numBytes = jsonData[j].wikiviews[k].bytes;
+
+
+                        numBytes = numBytes.toFixed(2);
+
+                        if (!byteArr[jsonData[j].page]) {
+                            byteArr[jsonData[j].page] = [];
+                        }
+                        byteArr[jsonData[j].page].push(numBytes);
+
                         dayData[jsonData[j].page].push(numViews);
 
-                        drilldownSeries.push({
+
+                        byteSize.push({
                             name: pages[j],
                             id: pages[j],
-                           data: date[pages[j]]
+                            data: byteArr[pages[j]]
+                        });
+
+                        drilldownSeries.push({
+                            //     name: pages[j],
+                            //     id: pages[j],
+                            //     data: date[pages[j]]
+                            // }, {
+                            name: pages[j],
+                            id: pages[j],
+                            data: date[pages[j]],
                         });
                     }
-
-                    // pointsNStuff.push({
-                    //     name: pages[j],
-                    //     id: pages[j],
-                    //     x: day,
-                    //     y: dayData[jsonData[j].page]
-                    // });
-
-
-
                 }
 
+
+                var fullBytes = (jsonData[j].wikiviews[k].bytes) / numViews;
+
+                fullBytes = fullBytes.toFixed(2);
 
                 regress.push({
                     name: pages[j],
                     id: pages[j],
-                    x: parseFloat(dayData[jsonData[j].page]),
+                    x: parseFloat(fullBytes),
                     y: parseFloat(numViews)
                 });
 
@@ -158,8 +172,8 @@ function doData(month, numIn) {
                 }],
 
                 drilldown: {
-                    series: drilldownSeries,
-                    id: 'primary'
+                    // series: drilldownSeries
+                    series: drilldownSeries, 
                 }
 
 
@@ -176,7 +190,7 @@ function doData(month, numIn) {
                 xAxis: {
                     title: {
                         enabled: true,
-                        text: 'Views'
+                        text: 'Bytes'
                     },
                     showLastLabel: true
                 },
@@ -214,12 +228,13 @@ function doData(month, numIn) {
                             }
                         },
                         tooltip: {
-                            headerFormat: '<b>{series.name}</b><br>',
-                            pointFormat: 'Day: {point.x}, {point.y} views'
+                            headerFormat: '',
+                            pointFormat: '<b> {point.name} </b> Bytes: {point.x}, {point.y} views'
                         }
                     }
                 },
-                series: [{
+                series: [
+                {
                     regression: true,
                     regressionSettings: {
                         type: 'linear',
@@ -237,18 +252,11 @@ function doData(month, numIn) {
 }
 doData(10, 10);
 </script>
-<center>
-    <h1>Pages:</h1>
-    <div class="btn-group btn-group-lg">
-        <button id="2" class="btn btn-primary">2</button>
-        <script>
-        $('#2').on('click', function(e) {
-
-            doData(10, 2);
-
-        })
-        </script>
-        <button id="5" class="btn btn-primary">5</button>
+<p>&nbsp;</p>
+<div class="span6" style="padding-left:30px;">
+    <customy>Month 10:</customy>
+    <div class="btn-group btn-group-med">
+        <button id="5" class="btn btn-default">5</button>
         <script>
         $('#5').on('click', function(e) {
 
@@ -256,7 +264,7 @@ doData(10, 10);
 
         })
         </script>
-        <button id="10" class="btn btn-primary">10</button>
+        <button id="10" class="btn btn-default">10</button>
         <script>
         $('#10').on('click', function(e) {
 
@@ -264,15 +272,7 @@ doData(10, 10);
 
         })
         </script>
-        <button id="15" class="btn btn-primary">15</button>
-        <script>
-        $('#15').on('click', function(e) {
-
-            doData(10, 15);
-
-        })
-        </script>
-        <button id="20" class="btn btn-primary">20</button>
+        <button id="20" class="btn btn-default">20</button>
         <script>
         $('#20').on('click', function(e) {
 
@@ -280,7 +280,7 @@ doData(10, 10);
 
         })
         </script>
-        <button id="30" class="btn btn-primary">30</button>
+        <button id="30" class="btn btn-default">30</button>
         <script>
         $('#30').on('click', function(e) {
 
@@ -288,7 +288,7 @@ doData(10, 10);
 
         })
         </script>
-        <button id="40" class="btn btn-primary">40</button>
+        <button id="40" class="btn btn-default">40</button>
         <script>
         $('#40').on('click', function(e) {
 
@@ -297,36 +297,94 @@ doData(10, 10);
         })
         </script>
     </div>
-</center>
-<center>
-    <h1>Month:</h1>
-    <div class="btn-group btn-group-lg">
-        <button id="ten" class="btn btn-primary">10</button>
+    <customy>Month 11:</customy>
+    <div class="btn-group btn-group-med">
+        <button id="511" class="btn btn-default">5</button>
         <script>
-        $('#ten').on('click', function(e) {
+        $('#511').on('click', function(e) {
 
-            doData(10, 10);
+            doData(11, 5);
 
         })
         </script>
-        <button id="eleven" class="btn btn-primary">11</button>
+        <button id="1011" class="btn btn-default">10</button>
         <script>
-        $('#eleven').on('click', function(e) {
+        $('#1011').on('click', function(e) {
+
+            doData(11, 10);
+
+        })
+        </script>
+        <button id="2011" class="btn btn-default">20</button>
+        <script>
+        $('#2011').on('click', function(e) {
 
             doData(11, 20);
 
         })
         </script>
-        <button id="twelve" class="btn btn-primary">12</button>
+        <button id="3011" class="btn btn-default">30</button>
         <script>
-        $('#12').on('click', function(e) {
+        $('#3011').on('click', function(e) {
+
+            doData(11, 30);
+
+        })
+        </script>
+        <button id="4011" class="btn btn-default">40</button>
+        <script>
+        $('#4011').on('click', function(e) {
+
+            doData(11, 40);
+
+        })
+        </script>
+    </div>
+    <customy>Month 12:</customy>
+    <div class="btn-group btn-group-med">
+        <button id="512" class="btn btn-default">5</button>
+        <script>
+        $('#512').on('click', function(e) {
+
+            doData(12, 5);
+
+        })
+        </script>
+        <button id="1012" class="btn btn-default">10</button>
+        <script>
+        $('#1012').on('click', function(e) {
+
+            doData(12, 10);
+
+        })
+        </script>
+        <button id="2012" class="btn btn-default">20</button>
+        <script>
+        $('#2012').on('click', function(e) {
 
             doData(12, 20);
 
         })
         </script>
+        <button id="3012" class="btn btn-default">30</button>
+        <script>
+        $('#3012').on('click', function(e) {
+
+            doData(12, 30);
+
+        })
+        </script>
+        <button id="4012" class="btn btn-default">40</button>
+        <script>
+        $('#4012').on('click', function(e) {
+
+            doData(12, 40);
+
+        })
+        </script>
     </div>
-</center>
+</div>
+<p>&nbsp;</p>
 <div id="container" style="height: 400px; min-width: 310px"></div>
-<h1>&nbsp;</h1>
+<p>&nbsp;</p>
 <div id="container2" style="height: 400px; min-width: 310px"></div>
