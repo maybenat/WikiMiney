@@ -40,14 +40,21 @@ function doData(month, numIn) {
                 pages[j] = jsonData[j].page;
                 test = [];
                 test = jsonData[j].wikiviews[0].views;
-                frequencies[j] = test;
-
 
                 for (var k in jsonData[j].wikiviews) {
                     if (!date[jsonData[j].page]) {
                         date[jsonData[j].page] = [];
                     }
                     var day = jsonData[j].wikiviews[k].day;
+
+                    var monthy = jsonData[j].wikiviews[k].month;
+                    var temp = month.toString();
+
+                    if((monthy === temp) && (day === "all"))
+                    {
+                        frequencies[j] = jsonData[j].wikiviews[k].views;
+                    }
+
                     if (!(day === "all")) {
                         date[jsonData[j].page].push([jsonData[j].wikiviews[k].month + "/" + day, jsonData[j].wikiviews[k].views]);
                         if (!dayData[jsonData[j].page]) {
