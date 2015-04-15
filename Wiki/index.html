@@ -49,19 +49,21 @@ function doData(month, numIn) {
                         date[jsonData[j].page] = [];
                     }
                     var day = jsonData[j].wikiviews[k].day;
-                    date[jsonData[j].page].push("MONTH", jsonData[j].wikiviews[k].views);
-                    if (!dayData[jsonData[j].page]) {
-                        dayData[jsonData[j].page] = [];
+                    if (!(day === "all")) {
+                        date[jsonData[j].page].push([jsonData[j].wikiviews[k].month + "/" + day, jsonData[j].wikiviews[k].views]);
+                        if (!dayData[jsonData[j].page]) {
+                            dayData[jsonData[j].page] = [];
+                        }
+                        var numViews = jsonData[j].wikiviews[k].views;
+
+                        dayData[jsonData[j].page].push(numViews);
+
+                        drilldownSeries.push({
+                            name: pages[j],
+                            id: pages[j],
+                           data: date[pages[j]]
+                        });
                     }
-                    var numViews = jsonData[j].wikiviews[k].views;
-
-                    dayData[jsonData[j].page].push(numViews);
-
-                    drilldownSeries.push({
-                        name: pages[j],
-                        id: pages[j],
-                        data: dayData[jsonData[j].page]
-                    });
 
                     // pointsNStuff.push({
                     //     name: pages[j],
@@ -99,9 +101,9 @@ function doData(month, numIn) {
                 title: {
                     text: 'Wiki Views'
                 },
-                // xAxis: {
-                //     type: 'category'
-                // },
+                xAxis: {
+                    type: 'category'
+                },
                 yAxis: {
                     title: {
                         text: 'Total Views'
@@ -169,12 +171,12 @@ function doData(month, numIn) {
                     zoomType: 'xy'
                 },
                 title: {
-                    text: 'Page Views Vs Page Size'
+                    text: 'Top Page Regression'
                 },
                 xAxis: {
                     title: {
                         enabled: true,
-                        text: 'Day'
+                        text: 'Views'
                     },
                     showLastLabel: true
                 },
@@ -311,7 +313,7 @@ doData(10, 10);
         <script>
         $('#eleven').on('click', function(e) {
 
-            doData(11, 10);
+            doData(11, 20);
 
         })
         </script>
@@ -319,7 +321,7 @@ doData(10, 10);
         <script>
         $('#12').on('click', function(e) {
 
-            doData(12, 10);
+            doData(12, 20);
 
         })
         </script>
