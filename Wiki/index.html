@@ -50,8 +50,7 @@ function doData(month, numIn) {
                     var monthy = jsonData[j].wikiviews[k].month;
                     var temp = month.toString();
 
-                    if((monthy === temp) && (day === "all"))
-                    {
+                    if ((monthy === temp) && (day === "all")) {
                         frequencies[j] = jsonData[j].wikiviews[k].views;
                     }
 
@@ -113,6 +112,7 @@ function doData(month, numIn) {
 
 
             }
+
 
             // Create the chart
             $('#container').highcharts({
@@ -192,7 +192,7 @@ function doData(month, numIn) {
                     zoomType: 'xy'
                 },
                 title: {
-                    text: 'Top Page Regression'
+                    text: 'Top Page vs Views Regression Line'
                 },
                 xAxis: {
                     title: {
@@ -237,7 +237,14 @@ function doData(month, numIn) {
                         tooltip: {
                             headerFormat: '',
                             pointFormat: '<b> {point.name} </b> Bytes: {point.x}, {point.y} views'
-                        }
+                        },
+                        events: {
+                            click: function(event, i) {
+                               var win = window.open("http://www.en.wikipedia.org/wiki/"+event.point.name, '_blank');
+                               win.focus();
+                            }
+                        },
+
                     }
                 },
                 series: [{
@@ -255,10 +262,12 @@ function doData(month, numIn) {
 
         })
 
+
 }
 doData(10, 10);
 </script>
 <p>&nbsp;</p>
+<span id="currentPage">
 <div class="span6" style="padding-left:30px;">
     <customy>Month 10:</customy>
     <div class="btn-group btn-group-med">
@@ -362,6 +371,14 @@ doData(10, 10);
 
         })
         </script>
+        <button id="7011" class="btn btn-default">70</button>
+        <script>
+        $('#7011').on('click', function(e) {
+
+            doData(11, 70);
+
+        })
+        </script>
     </div>
     <customy>Month 12:</customy>
     <div class="btn-group btn-group-med">
@@ -402,6 +419,14 @@ doData(10, 10);
         $('#4012').on('click', function(e) {
 
             doData(12, 40);
+
+        })
+        </script>
+        <button id="7012" class="btn btn-default">70</button>
+        <script>
+        $('#7012').on('click', function(e) {
+
+            doData(12, 70);
 
         })
         </script>

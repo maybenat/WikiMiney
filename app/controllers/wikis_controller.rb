@@ -10,6 +10,7 @@ class WikisController < ApplicationController
     "MainPage",
     "index.html",
     "Wiki",
+    "HIT%20MUSIC%20ONLY",
   ]
 
   def index
