@@ -1,14 +1,12 @@
 # TODO
 ### Backend
-* Add any additional uris
-* How store the cluster data
-* Clone project to AWS and get ready for production
-* Get app serving with Apache? on AWS
-* Add redirect rules to yo-mom.com
+* How store the cluster data??
+* Clone project to AWS and get ready for production!
+* Get app serving with Apache? on AWS!
+* Add redirect rules to yo-mom.com!
+* Bug on wikis#top -> returns data for all months, not just requested
+* Bug on wikis#top -> data is sometimes not order according to all
 
 
 ### Frontend
-* Make some placeholding, but nice looking html pages
-* Bootstrap?
-* Add any highchart gems
-* Get some fancy looking graphs of stuffz
+* Merge fancy graphs into actual rails pages

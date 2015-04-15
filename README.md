@@ -52,8 +52,8 @@ Go to localhost:3000 to see some stuff
 * [Highcharts-rails](http://github.com/PerfectlyNormal/highcharts-rails)
 * [Bootstrap-rails](https://github.com/seyhunak/twitter-bootstrap-rails)
 * [Deploy Rails to AWS](http://dennissuratna.com/rails-deployment-aws1)
-* [Deploy Rails to AWS](http://www.rabblemedia.net/installing-rvm-ruby-on-rails-and-passenger-on-ubuntu.html)
-* [RVM Passenger](https://rvm.io/deployment/passenger)
+* [~~Deploy Rails to AWS~~](http://www.rabblemedia.net/installing-rvm-ruby-on-rails-and-passenger-on-ubuntu.html)
+* [~~RVM Passenger~~](https://rvm.io/deployment/passenger)
 * [AWS ELB Docs](http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_Ruby_rails.html)
 
 

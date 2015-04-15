@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   get 'data/page/:page/year/:year/month/:month' => 'wikis#page_month'
   get 'data/cluster/2008/october' => 'wikis#cluster'
   #get 'data/cluster/2008/october' => 'clusters#cluster'
+  get 'data/compare/project/:project/page/:page' => 'wikis#compare', :constraints => { :project => /[^\/]+/, :page => /[^\/]+/ }
 
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
