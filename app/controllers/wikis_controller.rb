@@ -50,8 +50,8 @@ class WikisController < ApplicationController
   # get 'data/year/:year/month/:month/top/:size' => 'wikis#top'
   def top
     size = params[:size].to_i
-    if size > 50
-      size = 50
+    if size > 70
+      size = 70
     end
     #@wikis = Wiki.joins(:wikiviews).where("year = ? AND month = ? AND day = 'all'", params[:year], params[:month]).order('views DESC, page').take(size)
     @wikis = Wiki.joins(:wikiviews).where("year = ? AND month = ? AND page NOT IN (?)", params[:year], params[:month], $special_exclude_list).distinct.order('views DESC, page').take(size)

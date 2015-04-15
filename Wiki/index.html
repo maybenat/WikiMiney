@@ -173,7 +173,7 @@ function doData(month, numIn) {
 
                 drilldown: {
                     // series: drilldownSeries
-                    series: drilldownSeries, 
+                    series: drilldownSeries,
                 }
 
 
@@ -233,8 +233,7 @@ function doData(month, numIn) {
                         }
                     }
                 },
-                series: [
-                {
+                series: [{
                     regression: true,
                     regressionSettings: {
                         type: 'linear',
@@ -293,6 +292,23 @@ doData(10, 10);
         $('#40').on('click', function(e) {
 
             doData(10, 40);
+
+        })
+        </script>
+        <button id="50" class="btn btn-default">50</button>
+        <script>
+        $('#50').on('click', function(e) {
+
+            doData(10, 50);
+
+        })
+        </script>
+        </script>
+        <button id="70" class="btn btn-default">70</button>
+        <script>
+        $('#70').on('click', function(e) {
+
+            doData(10, 70);
 
         })
         </script>
