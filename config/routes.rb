@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   root 'welcome#index'
   #get 'top' => 'welcome#top'
   #get 'search' => 'welcome#search'
+  #get 'poster' => 'welcome#poster'
   #get 'top' => 'welcome#top'
   #get 'top' => 'welcome#top'
 
