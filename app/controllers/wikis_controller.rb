@@ -11,6 +11,10 @@ class WikisController < ApplicationController
     "index.html",
     "Wiki",
     "HIT%20MUSIC%20ONLY",
+    "favicon.ico",
+    "Favicon.ico",
+    "favicon.gif",
+    "Favicon.gif",
   ]
 
   def index
