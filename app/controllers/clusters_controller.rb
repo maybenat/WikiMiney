@@ -3,9 +3,9 @@ class ClustersController < ApplicationController
     @clusters = Cluster.take(50)
   end
 
-  ## get 'data/cluster/2008/october' => 'wikis#cluster'
-  #def cluster
-  #  @wikis = Wiki.joins(:wikiviews).where("year = '2008' AND month = '10' AND day = 'all'")
-  #  render :json => @wikis.to_json(:only => [:project, :page], :include => {:wikiviews => {:only => [:year, :month, :day, :views, :bytes]}})
-  #end
+  # get 'data/cluster/2008/october' => 'cluster#cluster'
+  def cluster
+    @cluster = Cluster.where("year = '2008' AND month = '10'").take(50)
+    render :json => @cluster.to_json(:only => [:project, :page, :views, :bytes, :cluster])
+  end
 end

@@ -1,8 +1,17 @@
-<%= nav_bar fixed: :top, brand: "WikiMiney" do %>
+<%= nav_bar fixed: :top, responsive: true, brand: "WikiMiney" do %>
     <%= menu_group do %>
-        <%= menu_item "Home", root_path %>
-        <%= menu_item "Wikis", wikis_path %>
-        <%= menu_item "Clusters", clusters_path %>
+        <%= menu_item "Top", top_path %>
+        <%= menu_item "Search", search_path %>
+        <%= menu_item "Page Month", page_month_path %>
+        <%= menu_item "Compare", compare_path %>
+        <%= menu_item "Cluster", cluster_path %>
+        <%= menu_item "Poster", poster_path %>
+        <%= menu_divider %>
+        <%= drop_down "Catalog" do %>
+            <%= menu_item "Wikis", wikis_path %>
+            <%= drop_down_divider %>
+            <%= menu_item "Clusters", clusters_path %>
+        <% end %>
     <% end %>
     <%= menu_group pull: :right do %>
         <%= menu_item "On GitHub", "http://github.com/nataliemcmullen/wikiminey"  %>

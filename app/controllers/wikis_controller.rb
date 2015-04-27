@@ -75,12 +75,6 @@ class WikisController < ApplicationController
     render :json => @wikis.to_json(:only => [:project, :page], :include => {:wikiviews => {:only => [:year, :month, :day, :views, :bytes]}})
   end
 
-  # get 'data/cluster/2008/october' => 'wikis#cluster'
-  def cluster
-    @wikis = Wiki.joins(:wikiviews).where("year = '2008' AND month = '10' AND day = 'all' AND page NOT IN (?)", $special_exclude_list).distinct
-    render :json => @wikis.to_json(:only => [:project, :page], :include => {:wikiviews => {:only => [:year, :month, :day, :views, :bytes]}})
-  end
-
   # get 'data/compare/project/:project/page/:page' => 'wikis#compare'
   def compare
     @wikis = Wiki.where("project = ? AND page = ?", params[:project], params[:page])
