@@ -15,6 +15,10 @@ class WikisController < ApplicationController
     "Favicon.ico",
     "favicon.gif",
     "Favicon.gif",
+    "en",
+    "Wsearch.php",
+    "index.php",
+    "/Talk:Main_Page",
   ]
 
   def index

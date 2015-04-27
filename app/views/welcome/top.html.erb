@@ -1,4 +1,3 @@
-<!--<script src="highcharts-regression.js"></script>-->
 
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
@@ -8,14 +7,17 @@
 
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+
+
 <link href='http://fonts.googleapis.com/css?family=Muli:300' rel='stylesheet' type='text/css'>
 <style>customy { font-family: 'Muli', sans-serif; size: 15px; }</style>
 <script>
 // $(function() {
-function doData(month, numIn) {
+function doData(month, numIn, year) {
     var pages, jsonData, frequencies, drilldownSeries, pagesData, date, dayData, regress, byteSize, byteArr;
 
-    var json = $.getJSON("http://localhost:3000/data/year/2008/month/" + month + "/top/" + numIn,
+    var json = $.getJSON("http://localhost:3000/data/year/"+year+"/month/" + month + "/top/" + numIn,
         function() {
             jsonData = json.responseJSON;
             arr = [];
@@ -74,10 +76,6 @@ function doData(month, numIn) {
                         });
 
                         drilldownSeries.push({
-                            //     name: pages[j],
-                            //     id: pages[j],
-                            //     data: date[pages[j]]
-                            // }, {
                             name: pages[j],
                             id: pages[j],
                             data: date[pages[j]],
@@ -258,7 +256,7 @@ function doData(month, numIn) {
 
 
 }
-doData(10, 10);
+doData(10, 10, 2008);
 </script>
 <p>&nbsp;</p>
 <span id="currentPage">
@@ -269,7 +267,7 @@ doData(10, 10);
         <script>
         $('#5').on('click', function(e) {
 
-            doData(10, 5);
+            doData(10, 5, 2008);
 
         })
         </script>
@@ -277,7 +275,7 @@ doData(10, 10);
         <script>
         $('#10').on('click', function(e) {
 
-            doData(10, 10);
+            doData(10, 10, 2008);
 
         })
         </script>
@@ -285,7 +283,7 @@ doData(10, 10);
         <script>
         $('#20').on('click', function(e) {
 
-            doData(10, 20);
+            doData(10, 20, 2008);
 
         })
         </script>
@@ -293,7 +291,7 @@ doData(10, 10);
         <script>
         $('#30').on('click', function(e) {
 
-            doData(10, 30);
+            doData(10, 30, 2008);
 
         })
         </script>
@@ -301,15 +299,7 @@ doData(10, 10);
         <script>
         $('#40').on('click', function(e) {
 
-            doData(10, 40);
-
-        })
-        </script>
-        <button id="50" class="btn btn-default">50</button>
-        <script>
-        $('#50').on('click', function(e) {
-
-            doData(10, 50);
+            doData(10, 40, 2008);
 
         })
         </script>
@@ -318,7 +308,7 @@ doData(10, 10);
         <script>
         $('#70').on('click', function(e) {
 
-            doData(10, 70);
+            doData(10, 70, 2008);
 
         })
         </script>
@@ -329,7 +319,7 @@ doData(10, 10);
         <script>
         $('#511').on('click', function(e) {
 
-            doData(11, 5);
+            doData(11, 5, 2008);
 
         })
         </script>
@@ -337,7 +327,7 @@ doData(10, 10);
         <script>
         $('#1011').on('click', function(e) {
 
-            doData(11, 10);
+            doData(11, 10, 2008);
 
         })
         </script>
@@ -345,7 +335,7 @@ doData(10, 10);
         <script>
         $('#2011').on('click', function(e) {
 
-            doData(11, 20);
+            doData(11, 20, 2008);
 
         })
         </script>
@@ -353,7 +343,7 @@ doData(10, 10);
         <script>
         $('#3011').on('click', function(e) {
 
-            doData(11, 30);
+            doData(11, 30, 2008);
 
         })
         </script>
@@ -361,7 +351,7 @@ doData(10, 10);
         <script>
         $('#4011').on('click', function(e) {
 
-            doData(11, 40);
+            doData(11, 40, 2008);
 
         })
         </script>
@@ -369,7 +359,7 @@ doData(10, 10);
         <script>
         $('#7011').on('click', function(e) {
 
-            doData(11, 70);
+            doData(11, 70, 2008);
 
         })
         </script>
@@ -380,7 +370,7 @@ doData(10, 10);
         <script>
         $('#512').on('click', function(e) {
 
-            doData(12, 5);
+            doData(12, 5, 2008);
 
         })
         </script>
@@ -388,7 +378,7 @@ doData(10, 10);
         <script>
         $('#1012').on('click', function(e) {
 
-            doData(12, 10);
+            doData(12, 10, 2008);
 
         })
         </script>
@@ -396,7 +386,7 @@ doData(10, 10);
         <script>
         $('#2012').on('click', function(e) {
 
-            doData(12, 20);
+            doData(12, 20, 2008);
 
         })
         </script>
@@ -404,7 +394,7 @@ doData(10, 10);
         <script>
         $('#3012').on('click', function(e) {
 
-            doData(12, 30);
+            doData(12, 30, 2008);
 
         })
         </script>
@@ -412,7 +402,7 @@ doData(10, 10);
         <script>
         $('#4012').on('click', function(e) {
 
-            doData(12, 40);
+            doData(12, 40, 2008);
 
         })
         </script>
@@ -420,11 +410,165 @@ doData(10, 10);
         <script>
         $('#7012').on('click', function(e) {
 
-            doData(12, 70);
+            doData(12, 70, 2008);
 
         })
         </script>
     </div>
+<p>&nbsp;</p>
+<customy>10/2012:</customy>
+<div class="btn-group btn-group-med">
+<button id="512_2" class="btn btn-default">5</button>
+<script>
+$('#512_2').on('click', function(e) {
+
+doData(10, 5, 2012);
+
+})
+</script>
+<button id="1012_2" class="btn btn-default">10</button>
+<script>
+$('#1012_2').on('click', function(e) {
+
+doData(10, 10, 2012);
+
+})
+</script>
+<button id="2012_2" class="btn btn-default">20</button>
+<script>
+$('#2012_2').on('click', function(e) {
+
+doData(10, 20, 2012);
+
+})
+</script>
+<button id="3012_2" class="btn btn-default">30</button>
+<script>
+$('#3012_2').on('click', function(e) {
+
+doData(10, 30, 2012);
+
+})
+</script>
+<button id="4012_2" class="btn btn-default">40</button>
+<script>
+$('#4012_2').on('click', function(e) {
+
+doData(10, 40, 2012);
+
+})
+</script>
+<button id="7012_2" class="btn btn-default">70</button>
+<script>
+$('#7012_2').on('click', function(e) {
+
+doData(10, 70, 2012);
+
+})
+</script>
+</div>
+<customy>11/2012:</customy>
+<div class="btn-group btn-group-med">
+<button id="512_3" class="btn btn-default">5</button>
+<script>
+$('#512_3').on('click', function(e) {
+
+doData(11, 5, 2012);
+
+})
+</script>
+<button id="1012_3" class="btn btn-default">10</button>
+<script>
+$('#1012_3').on('click', function(e) {
+
+doData(11, 10, 2012);
+
+})
+</script>
+<button id="2012_3" class="btn btn-default">20</button>
+<script>
+$('#2012_3').on('click', function(e) {
+
+doData(11, 20, 2012);
+
+})
+</script>
+<button id="3012_3" class="btn btn-default">30</button>
+<script>
+$('#3012_3').on('click', function(e) {
+
+doData(11, 30, 2012);
+
+})
+</script>
+<button id="4012_3" class="btn btn-default">40</button>
+<script>
+$('#4012_3').on('click', function(e) {
+
+doData(11, 40, 2012);
+
+})
+</script>
+<button id="7012_3" class="btn btn-default">70</button>
+<script>
+$('#7012_3').on('click', function(e) {
+
+doData(11, 70, 2012);
+
+})
+</script>
+</div>
+<customy>12/2012:</customy>
+<div class="btn-group btn-group-med">
+<button id="512_4" class="btn btn-default">5</button>
+<script>
+$('#512_4').on('click', function(e) {
+
+doData(12, 5, 2012);
+
+})
+</script>
+<button id="1012_4" class="btn btn-default">10</button>
+<script>
+$('#1012_4').on('click', function(e) {
+
+doData(12, 10, 2012);
+
+})
+</script>
+<button id="2012_34" class="btn btn-default">20</button>
+<script>
+$('#2012_34').on('click', function(e) {
+
+doData(12, 20, 2012);
+
+})
+</script>
+<button id="3012_34" class="btn btn-default">30</button>
+<script>
+$('#3012_34').on('click', function(e) {
+
+doData(12, 30, 2012);
+
+})
+</script>
+<button id="4012_34" class="btn btn-default">40</button>
+<script>
+$('#4012_34').on('click', function(e) {
+
+doData(12, 40, 2012);
+
+})
+</script>
+<button id="7012_34" class="btn btn-default">70</button>
+<script>
+$('#7012_34').on('click', function(e) {
+
+doData(12, 70, 2012);
+
+})
+</script>
+</div>
 </div>
 <p>&nbsp;</p>
 <div id="container" style="height: 400px; min-width: 310px"></div>
