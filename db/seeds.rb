@@ -37,10 +37,11 @@ paths.each do |path|
 end
 
 
-#input = File.open('db/data/2008/10/stripped-agg-cluster')
-#input.each_line do |line|
-#  l = line[0, line.length - 1].split(' ')
-#  view = l[2].to_i
-#  byte = l[3].to_i
-#  Cluster.create(:project => l[0], :page => l[1], :year => "2008", :month => "10", :views => view, :bytes => byte, :cluster => l[4])
-#end
+input = File.open('db/data/2008-10-cluster')
+puts "Clustering 10/2008"
+input.each_line do |line|
+  l = line[0, line.length - 1].split(' ')
+  view = l[2].to_i
+  byte = l[3].to_i
+  Cluster.create(:project => l[0], :page => l[1], :year => "2008", :month => "10", :views => view, :bytes => byte, :cluster => l[4])
+end

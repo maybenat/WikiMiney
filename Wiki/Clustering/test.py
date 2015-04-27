@@ -2,6 +2,7 @@ import math
 import random
 import time
 import json
+import os
 from Tkinter import *
 
 ##Based on the clustering implementation found here: http://www.kosbie.net/cmu/fall-10/15-110/handouts/notes-clustering/kmeans.py
@@ -323,7 +324,30 @@ def paintClusters2D(canvas, clusters, centroids, title=""):
     canvas.update()
     canvas.mainloop()
 
+
+def printClusters(clusteringDictionary):
+    clusters = clusteringDictionary["clusters"]
+    fname = "2008-10-cluster"
+    if os.path.isfile(fname):
+        os.system("rm %s" % fname)
+    clust_file = open(fname, "w")
+    for clusterIndex in range(len(clusters)):
+        instances = clusters[clusterIndex]
+        for instance in instances:
+            # format:
+            # <project> <page> <views> <bytes> <cluster>
+            pr = "Null"
+            pa = instance[0]
+            vi = int(instance[1])
+            by = int(instance[1] * instance[2])
+            cl = clusterIndex
+            line = "%s %s %d %d %d\n" % (pr, pa, vi, by, cl)
+            clust_file.write(line)
+    clust_file.close()
+
+
 dataset = loadCSV("vals.csv")
 clustering = kmeans(dataset, 5, False)
+#printClusters(clustering)
 showClusters2D(clustering)
 printTable(clustering["centroids"])
