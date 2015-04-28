@@ -5,19 +5,25 @@ class WelcomeController < ApplicationController
   def top
   end
 
-  def search
-  end
-
-  def page_month
-  end
-
   def compare
   end
 
   def cluster
   end
 
+  def search
+  end
+
   def poster
   end
 
+  def about
+  end
+
+  # maybes?
+  def page_month
+  end
+
+  def mobile
+  end
 end

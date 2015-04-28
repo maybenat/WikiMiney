@@ -84,4 +84,9 @@ class WikisController < ApplicationController
     @wikis = Wiki.where("project = ? AND page = ?", params[:project], params[:page])
     render :json => @wikis.to_json(:only => [:project, :page], :include => {:wikiviews => {:only => [:year, :month, :day, :views, :bytes]}})
   end
+
+  def mobile
+    @mobiles = Wiki.joins(:wikiviews).where("project = 'en.mw'").distinct
+    render :json => @mobiles.to_json(:only => [:project, :page], :include => {:wikiviews => {:only => [:year, :month, :day, :views, :bytes]}})
+  end
 end
