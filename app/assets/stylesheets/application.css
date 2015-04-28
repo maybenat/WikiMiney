@@ -17,4 +17,20 @@
 body { 
   padding: 30px; 
   padding-top: 55px; 
+  font-family: 'Muli', sans-serif;
+  size: 15px;
+}
+
+.cust-graph {
+  height: 400px;
+  min-width: 310px
+}
+
+.phat-vert {
+  padding-top: 20%;
+}
+
+.gray-back {
+  background-color: #EEE;
+  padding: 10px;
 }
