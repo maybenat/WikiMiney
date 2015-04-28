@@ -1,6 +1,6 @@
-function getTop(month, year, numIn) {
+function getCluster() {
   var pages, jsonData, frequencies, drilldownSeries, pagesData, date, dayData, regress, byteSize, byteArr;
-  var json = $.getJSON("/data/year/" + year + "/month/" + month + "/top/" + numIn,
+  var json = $.getJSON("/data/cluster/2008/october",
     function() {
       // Get top 50 most viewed pages in year and month
       jsonData = json.responseJSON;
@@ -84,53 +84,8 @@ function getTop(month, year, numIn) {
         });
       }
 
-      // Create the histogram
-      $('#histogram').highcharts({
-        chart: {type: 'column'},
-        title: {text: 'Wiki Views'},
-        xAxis: {type: 'category'},
-        yAxis: {
-          title: {text: 'Total Views'}
-        },
-        legend: {enabled: true},
-        plotOptions: {
-          spline: {
-            shadow: false,
-            marker: {radius: 1}
-          },
-          areaspline: {
-            color: 'rgb(69, 114, 167)',
-            fillColor: 'rgba(69, 114, 167,.25)',
-            shadow: false,
-            marker: {radius: 1}
-          },
-          series: {
-            borderWidth: 0,
-            dataLabels: {enabled: false}
-          }
-        },
-        series: [{
-          name: 'Frequencies',
-          colorByPoint: true,
-          data: pagesData,
-        }, {
-          name: 'Curve',
-          type: 'spline',
-          visible: false,
-          data: frequencies,
-        }, {
-          name: 'Filled Curve',
-          type: 'areaspline',
-          visible: false,
-          data: frequencies,
-        }],
-        drilldown: {
-          series: drilldownSeries,
-        }
-      });
-
-      // Create the regression
-      $('#regression').highcharts({
+      // Create the clusters
+      $('#cluster').highcharts({
         chart: {
           type: 'scatter',
           zoomType: 'xy'

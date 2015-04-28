@@ -34,3 +34,7 @@ body {
   background-color: #EEE;
   padding: 10px;
 }
+
+.pad-below {
+  padding-bottom: 25px;
+}

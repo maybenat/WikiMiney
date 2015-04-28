@@ -1,4 +1,4 @@
-function getTop(month, year, numIn) {
+function compare(month, year, numIn) {
   var pages, jsonData, frequencies, drilldownSeries, pagesData, date, dayData, regress, byteSize, byteArr;
   var json = $.getJSON("/data/year/" + year + "/month/" + month + "/top/" + numIn,
     function() {
