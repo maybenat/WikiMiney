@@ -1,87 +1,9 @@
 function getCluster() {
-  var pages, jsonData, frequencies, drilldownSeries, pagesData, date, dayData, regress, byteSize, byteArr;
   var json = $.getJSON("/data/cluster/2008/october",
     function() {
-      // Get top 50 most viewed pages in year and month
-      jsonData = json.responseJSON;
-
-      // Initialize
-      arr = [];
-      frequencies = [];
-      pages = [];
-      byteSize = [];
-      pagesData = [];
-      drilldownSeries = [];
-      date = [];
-      dayData = [];
-      byteArr = [];
-      regress = [];
-
-      // For each page
-      for (var j in jsonData) {
-        pages[j] = jsonData[j].page;
-        test = [];
-        test = jsonData[j].wikiviews[0].views;
-
-        // Load each all of the day views for each page within a month
-        for (var k in jsonData[j].wikiviews) {
-          if (!date[jsonData[j].page]) {
-            date[jsonData[j].page] = [];
-          }
-          var day = jsonData[j].wikiviews[k].day;
-
-          var monthy = jsonData[j].wikiviews[k].month;
-          var temp = month.toString();
-
-          if ((monthy === temp) && (day === "all")) {
-            frequencies[j] = jsonData[j].wikiviews[k].views;
-          }
-
-          if (!(day === "all")) {
-            date[jsonData[j].page].push([jsonData[j].wikiviews[k].month + "/" + day, jsonData[j].wikiviews[k].views]);
-            if (!dayData[jsonData[j].page]) {
-              dayData[jsonData[j].page] = [];
-            }
-
-            var numViews = jsonData[j].wikiviews[k].views;
-            var numBytes = jsonData[j].wikiviews[k].bytes;
-
-            numBytes = numBytes.toFixed(2);
-            if (!byteArr[jsonData[j].page]) {
-              byteArr[jsonData[j].page] = [];
-            }
-            byteArr[jsonData[j].page].push(numBytes);
-            dayData[jsonData[j].page].push(numViews);
-
-            byteSize.push({
-              name: pages[j],
-              id: pages[j],
-              data: byteArr[pages[j]]
-            });
-
-            drilldownSeries.push({
-              name: pages[j],
-              id: pages[j],
-              data: date[pages[j]],
-            });
-          }
-        }
-
-        var fullBytes = (jsonData[j].wikiviews[k].bytes) / numViews;
-        fullBytes = fullBytes.toFixed(2);
-
-        regress.push({
-          name: pages[j],
-          id: pages[j],
-          x: parseFloat(fullBytes),
-          y: parseFloat(frequencies[j])
-        });
-
-        pagesData.push({
-          name: pages[j],
-          y: frequencies[j],
-          drilldown: date[pages[j]] ? pages[j] : null
-        });
+      toPlot = [];
+      for (var i = 0; i < 10; i++) { 
+        toPlot.push([i, i]);
       }
 
       // Create the clusters
@@ -90,7 +12,7 @@ function getCluster() {
           type: 'scatter',
           zoomType: 'xy'
         },
-        title: {text: 'Top Page vs Views Regression Line'},
+        title: {text: 'Cluster'},
         xAxis: {
           title: {
             enabled: true,
@@ -127,7 +49,7 @@ function getCluster() {
             },
             tooltip: {
               headerFormat: '',
-              pointFormat: '<b> {point.name} </b> Bytes: {point.x}, {point.y} views'
+              pointFormat: '<b>{point.name}</b> Bytes: {point.x}, {point.y} views'
             },
             events: {
               click: function(event, i) {
@@ -138,13 +60,7 @@ function getCluster() {
           }
         },
         series: [{
-          regression: true,
-          regressionSettings: {
-            type: 'linear',
-            color: 'rgba(223, 83, 83, .9)',
-          },
-          colorByPoint: true,
-          data: regress,
+          data: toPlot,
         }],
       });
     }
