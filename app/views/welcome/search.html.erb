@@ -1,5 +1,6 @@
 <h1>Search</h1>
-<div class="row pad-below">
+<div class="row">
+  <div class="col-md-1"></div>
   <div class="col-md-3 form-group">
     <label class="col-sm-1 control-label">Page</label>
     <input id="pages-value" type="text" class="form-control" placeholder="Page Name">
@@ -7,40 +8,35 @@
 
   <div class="col-md-3 form-group">
     <label class="col-sm-1 control-label">Views</label>
-    <%= select_tag "test1", options_for_select([["One", "1"]]) %>
+    <%= select_tag "test1", options_for_select([["One", "1"]]), { :class => 'form-control' } %>
   </div>
 
   <div class="col-md-3 form-group">
     <label class="col-sm-1 control-label">Bytes</label>
-    <%= select_tag "test2", options_for_select([["Two", "2"]]) %>
+    <%= select_tag "test2", options_for_select([["Two", "2"]]), { :class => 'form-control' } %>
   </div>
 </div>
 <div class="row pad-below">
+  <div class="col-md-1"></div>
   <div class="col-md-3 form-group">
     <label class="col-sm-1 control-label">Month</label>
-    <%= select_tag "month", options_for_select(@months) %>
-    <!-- Don't know if the above select_tag works
-    <select id="month-value" class="form-control">
-      <option value="10">October</option>
-      <option value="11">November</option>
-      <option value="12">December</option>
-    </select>
-    -->
+    <%= select_tag "month", options_for_select(@months), { :class => 'form-control' } %>
   </div>
 
   <div class="col-md-3 form-group">
     <label class="col-sm-1 control-label">Day</label>
-    <%= select_tag "day", options_for_select(@days) %>
+    <%= select_tag "day", options_for_select(@days), { :class => 'form-control' } %>
   </div>
 
   <div class="col-md-3 form-group">
     <label class="col-sm-1 control-label">Year</label>
-    <%= select_tag "year", options_for_select(@years) %>
+    <%= select_tag "year", options_for_select(@years), { :class => 'form-control' } %>
   </div>
 </div>
 
 <div class="row">
-  <div class="col-md-12">
+  <div class="col-md-1"></div>
+  <div class="col-md-11">
     <div class="pad-below">
       <div class="gray-back">
         <div id="results" class="cust-graph"></div>

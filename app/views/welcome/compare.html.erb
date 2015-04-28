@@ -74,21 +74,14 @@ function toggleTab(tab) {
       <div class="row">
         <div class="form-group">
           <label class="col-sm-1 control-label">Month</label>
-          <select id="month-value" class="form-control">
-            <option value="10">October</option>
-            <option value="11">November</option>
-            <option value="12">December</option>
-          </select>
+          <%= select_tag "red-month", options_for_select(@months), { :class => 'form-control' } %>
         </div>
       </div>
 
       <div class="row">
         <div class="form-group">
           <label class="col-sm-1 control-label">Year</label>
-          <select id="year-value" class="form-control">
-            <option value="2008">2008</option>
-            <option value="2012">2012</option>
-          </select>
+          <%= select_tag "red-year", options_for_select(@years), { :class => 'form-control' } %>
         </div>
       </div>
     </div>
@@ -101,21 +94,14 @@ function toggleTab(tab) {
       <div class="row">
         <div class="form-group">
           <label class="col-sm-1 control-label">Month</label>
-          <select id="month-value" class="form-control">
-            <option value="10">October</option>
-            <option value="11">November</option>
-            <option value="12">December</option>
-          </select>
+          <%= select_tag "blue-month", options_for_select(@months), { :class => 'form-control' } %>
         </div>
       </div>
 
       <div class="row">
         <div class="form-group">
           <label class="col-sm-1 control-label">Year</label>
-          <select id="year-value" class="form-control">
-            <option value="2008">2008</option>
-            <option value="2012">2012</option>
-          </select>
+          <%= select_tag "blue-year", options_for_select(@years), { :class => 'form-control' } %>
         </div>
       </div>
     </div>
@@ -141,21 +127,14 @@ function toggleTab(tab) {
     <div class="col-md-4"></div>
     <div class="col-md-4 form-group">
       <label class="col-sm-1 control-label">Month</label>
-      <select id="month-value" class="form-control">
-        <option value="10">October</option>
-        <option value="11">November</option>
-        <option value="12">December</option>
-      </select>
+      <%= select_tag "month", options_for_select(@months), { :class => 'form-control' } %>
     </div>
   </div>
   <div class="row pad-below">
     <div class="col-md-4"></div>
     <div class="col-md-4 form-group">
-      <label class="col-sm-1 control-label">Month</label>
-      <select id="year-value" class="form-control">
-        <option value="2008">2008</option>
-        <option value="2012">2012</option>
-      </select>
+      <label class="col-sm-1 control-label">Year</label>
+      <%= select_tag "year", options_for_select(@years), { :class => 'form-control' } %>
     </div>
   </div>
 
@@ -169,7 +148,7 @@ function toggleTab(tab) {
       <div class="row">
         <div class="form-group">
           <label class="col-sm-1 control-label">Page</label>
-          <input id="pages-value" type="text" class="form-control" placeholder="Page Name">
+          <input id="red-pages-value" type="text" class="form-control" placeholder="Page Name">
         </div>
       </div>
     </div>
@@ -182,7 +161,7 @@ function toggleTab(tab) {
       <div class="row">
         <div class="form-group">
           <label class="col-sm-1 control-label">Page</label>
-          <input id="pages-value" type="text" class="form-control" placeholder="Page Name">
+          <input id="blue-pages-value" type="text" class="form-control" placeholder="Page Name">
         </div>
       </div>
     </div>

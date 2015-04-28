@@ -1,26 +1,30 @@
 class WelcomeController < ApplicationController
   $months = []
-  $months.unshift(['October', '10'])
-  $months.unshift(['November', '11'])
-  $months.unshift(['December', '12'])
+  $months.push(['October', '10'])
+  $months.push(['November', '11'])
+  $months.push(['December', '12'])
 
   $days = []
   for i in 1..31
-    $days.unshift(['%d' i, '%d' i])
+    $days.push([i, i])
   end
-  $days.unshift(['Entire Month Aggregate', 'all'])
+  $days.push(['Entire Month Aggregate', 'all'])
 
   $years = []
-  $years.unshift(['2008', '2008'])
-  $years.unshift(['2012', '2012'])
+  $years.push(['2008', '2008'])
+  $years.push(['2012', '2012'])
 
   def index
   end
 
   def top
+    @months = $months
+    @years = $years
   end
 
   def compare
+    @months = $months
+    @years = $years
   end
 
   def cluster
