@@ -1,1 +1,199 @@
-<h1>Search</h1>
+<script>
+function compareData() {
+  var month = document.getElementById("month-value").value;
+  var year = document.getElementById("year-value").value;
+  var pages = document.getElementById("pages-value").value;
+
+  if (parseInt(month) && parseInt(year) && parseInt(pages)) {
+    //getTop(month, year, pages);
+  }
+}
+
+//getTop(10, 2008, 10);
+
+function toggleTab(tab) {
+  if (tab === 'pom') {
+    var el = document.getElementById('pom-tab');
+    if (el) {
+      el.className += el.className ? ' active' : 'active';
+    }
+    el = document.getElementById('ppm-tab');
+    if (el) {
+      el.className = '';
+    }
+    document.getElementById('page-over-months').style.display = "block";
+    document.getElementById('pages-per-month').style.display = "none";
+  } else if (tab === 'ppm') {
+    var el = document.getElementById('ppm-tab');
+    if (el) {
+      el.className += el.className ? ' active' : 'active';
+    }
+    el = document.getElementById('pom-tab');
+    if (el) {
+      el.className = '';
+    }
+    document.getElementById('pages-per-month').style.display = "block";
+    document.getElementById('page-over-months').style.display = "none";
+  }
+}
+</script>
+
+
+<h1>Compare</h1>
+<div class="row pad-below">
+  <div class="col-md-1"></div>
+  <div class="col-md-11">
+    <div class="pad-below">
+      <div class="gray-back">
+        <div id="histogram" class="cust-graph"></div>
+      </div>
+    </div>
+
+    <ul class="nav nav-tabs nav-justified pad-below">
+      <li id="pom-tab" role="presentation" class="active"><a onClick="toggleTab('pom')">Page Over Months</a></li>
+      <li id="ppm-tab" role="presentation"><a onClick="toggleTab('ppm')">Pages Per Month</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="row" id="page-over-months">
+  <div class="row pad-below">
+    <div class="col-md-4"></div>
+    <div class="col-md-4 form-group">
+      <label class="col-sm-1 control-label">Page</label>
+      <input id="pages-value" type="text" class="form-control" placeholder="Page Name">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-3">
+      <div class="row">
+        <button type="button" class="btn btn-primary">Red</button>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="form-group">
+          <label class="col-sm-1 control-label">Month</label>
+          <select id="month-value" class="form-control">
+            <option value="10">October</option>
+            <option value="11">November</option>
+            <option value="12">December</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group">
+          <label class="col-sm-1 control-label">Year</label>
+          <select id="year-value" class="form-control">
+            <option value="2008">2008</option>
+            <option value="2012">2012</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-1"></div>
+    <div class="col-md-3">
+      <div class="row">
+        <button type="button" class="btn btn-danger">Blue</button>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="form-group">
+          <label class="col-sm-1 control-label">Month</label>
+          <select id="month-value" class="form-control">
+            <option value="10">October</option>
+            <option value="11">November</option>
+            <option value="12">December</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group">
+          <label class="col-sm-1 control-label">Year</label>
+          <select id="year-value" class="form-control">
+            <option value="2008">2008</option>
+            <option value="2012">2012</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">&nbsp;</div>
+
+  <div class="row">
+    <div class="col-md-6"></div>
+    <div class="col-md-3">
+      <button type="submit" class="btn btn-default" onClick="compareData()">Compare!</button>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+<div class="row" id="pages-per-month" style="display: none;">
+  <div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4 form-group">
+      <label class="col-sm-1 control-label">Month</label>
+      <select id="month-value" class="form-control">
+        <option value="10">October</option>
+        <option value="11">November</option>
+        <option value="12">December</option>
+      </select>
+    </div>
+  </div>
+  <div class="row pad-below">
+    <div class="col-md-4"></div>
+    <div class="col-md-4 form-group">
+      <label class="col-sm-1 control-label">Month</label>
+      <select id="year-value" class="form-control">
+        <option value="2008">2008</option>
+        <option value="2012">2012</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-3">
+      <div class="row">
+        <button type="button" class="btn btn-primary">Red</button>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="form-group">
+          <label class="col-sm-1 control-label">Page</label>
+          <input id="pages-value" type="text" class="form-control" placeholder="Page Name">
+        </div>
+      </div>
+    </div>
+    <div class="col-md-1"></div>
+    <div class="col-md-3">
+      <div class="row">
+        <button type="button" class="btn btn-danger">Blue</button>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="form-group">
+          <label class="col-sm-1 control-label">Page</label>
+          <input id="pages-value" type="text" class="form-control" placeholder="Page Name">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">&nbsp;</div>
+
+  <div class="row">
+    <div class="col-md-6"></div>
+    <div class="col-md-3">
+      <button type="submit" class="btn btn-default" onClick="compareData()">Compare!</button>
+    </div>
+  </div>
+</div>

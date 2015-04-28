@@ -10,9 +10,6 @@ Rails.application.routes.draw do
   get 'search' => 'welcome#search'
   get 'poster' => 'welcome#poster'
   get 'about' => 'welcome#about'
-
-  # maybes?
-  get 'page_month' => 'welcome#page_month'
   get 'mobile' => 'welcome#mobile'
 
   # json responses

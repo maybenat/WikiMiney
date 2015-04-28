@@ -7,13 +7,11 @@
         <%= menu_divider %>
         <%= drop_down "Other" do %>
             <%= menu_item "Poster", poster_path %>
+            <%= menu_item "Mobile", mobile_path %>
             <%= menu_item "About", about_path %>
             <%= drop_down_divider %>
             <%= menu_item "Wikis", wikis_path %>
             <%= menu_item "Clusters", clusters_path %>
-            <%= drop_down_divider %>
-            <%= menu_item "Page Month", page_month_path %>
-            <%= menu_item "Mobile", mobile_path %>
         <% end %>
     <% end %>
     <%= menu_group pull: :right do %>

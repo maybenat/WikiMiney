@@ -20,10 +20,6 @@ class WelcomeController < ApplicationController
   def about
   end
 
-  # maybes?
-  def page_month
-  end
-
   def mobile
   end
 end
