@@ -1,22 +1,32 @@
 <h1>Search</h1>
 <hr />
 
+<script>
+function runSearch() {
+var month_s = document.getElementById("month").value;
+var year_s = document.getElementById("year").value;
+var day_s = document.getElementById("day").value;
+var page_s = document.getElementById("pages-value").value;
+
+if (parseInt(month_s) && parseInt(year_s)) {
+search(month_s, year_s, day_s, page_s);
+}
+
+}
+
+</script>
+
 <div class="row">
   <div class="col-md-1"></div>
   <div class="col-md-3 form-group">
     <label class="col-sm-1 control-label">Page</label>
     <input id="pages-value" type="text" class="form-control" placeholder="Page Name">
   </div>
+<div class="col-md-3 form-group">
+<label class="col-sm-1 control-label">Projects</label>
+<%= select_tag "project", options_for_select(@projects), { :class => 'form-control' } %>
+</div>
 
-  <div class="col-md-3 form-group">
-    <label class="col-sm-1 control-label">Views</label>
-    <%= select_tag "test1", options_for_select([["One", "1"]]), { :class => 'form-control' } %>
-  </div>
-
-  <div class="col-md-3 form-group">
-    <label class="col-sm-1 control-label">Bytes</label>
-    <%= select_tag "test2", options_for_select([["Two", "2"]]), { :class => 'form-control' } %>
-  </div>
 </div>
 <div class="row pad-below">
   <div class="col-md-1"></div>
@@ -34,6 +44,11 @@
     <label class="col-sm-1 control-label">Year</label>
     <%= select_tag "year", options_for_select(@years), { :class => 'form-control' } %>
   </div>
+
+<div class="col-md-1 form-group">
+<label class="col-sm-1 control-label">&nbsp;</label>
+<button type="submit" class="btn btn-default form-control" onClick="runSearch()">Go!</button>
+</div>
 </div>
 
 <div class="row">

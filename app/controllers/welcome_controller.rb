@@ -14,6 +14,19 @@ class WelcomeController < ApplicationController
   $years.push(['2008', '2008'])
   $years.push(['2012', '2012'])
 
+  $projects = []
+  $projects.push(['English', 'en'])
+  $projects.push(['Wikibooks', 'en.b'])
+  $projects.push(['Wiktionary', 'en.d'])
+  $projects.push(['Wikimedia', 'en.m'])
+  $projects.push(['Wikipedia Mobile', 'en.mw'])
+  $projects.push(['Wikinews', 'en.n'])
+  $projects.push(['Wikiquote', 'en.q'])
+  $projects.push(['Wikisource', 'en.s'])
+  $projects.push(['Wikiversity', 'en.v'])
+  $projects.push(['Mediawiki', 'en.w'])
+
+
   def index
   end
 
@@ -34,6 +47,8 @@ class WelcomeController < ApplicationController
     @months = $months
     @days = $days
     @years = $years
+    @projects = $projects
+    
   end
 
   def poster
