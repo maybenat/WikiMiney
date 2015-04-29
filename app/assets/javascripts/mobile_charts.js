@@ -1,22 +1,17 @@
 function getMobile() {
   var json = $.getJSON("/data/progress/mobile",
     function() {
-      jsonData = json.responseJSON[0]["wikiviews"];
-      toPlot = [];
-      cats = [];
+      var jsonData = json.responseJSON[0]["wikiviews"];
+      var cats_08 = build_categories_by_year("2008");
+      var cats_12 = build_categories_by_year("2012");
+      var cats = cats_08.concat(cats_12);
 
-      for (var index in jsonData) {
-        v = jsonData[index]
-        if (v["day"] != "all") {
-          toPlot.push(v["views"]);
-          cats.push(v["month"] + "/" + v["day"] + "/" + v["year"]);
-        }
-      }
+      var toPlot = build_column_data_with_cats(jsonData, cats);
 
       // Create the histogram
       $('#mobile').highcharts({
         chart: {type: 'column'},
-        title: {text: 'Mobile Use'},
+        title: {text: 'Wikipedia Mobile Views'},
         xAxis: { categories: cats, crosshair: true },
         yAxis: {
           title: {text: 'Total Views'}
