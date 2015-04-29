@@ -57,34 +57,45 @@ class WikisController < ApplicationController
   end
 
   # get 'data/year/:year/month/:month/top/:size' => 'wikis#top'
+  # change to top_month and fix url -> 'data/top/year/month'
   def top
     size = params[:size].to_i
     if size > 70
       size = 70
     end
-    #@wikis = Wiki.joins(:wikiviews).where("year = ? AND month = ? AND day = 'all'", params[:year], params[:month]).order('views DESC, page').take(size)
-    @wikis = Wiki.joins(:wikiviews).where("year = ? AND month = ? AND page NOT IN (?)", params[:year], params[:month], $special_exclude_list).distinct.order('views DESC, page').take(size)
-    render :json => @wikis.to_json(:only => [:project, :page], :include => {:wikiviews => {:only => [:year, :month, :day, :views, :bytes]}})
+    @wikis = Wiki.find_by_sql ["SELECT * FROM wikis INNER JOIN wikiviews ON wikiviews.wiki_id = wikis.id
+                                WHERE wikiviews.month = ? AND wikiviews.year = ? AND wikis.page NOT IN (?)
+                                ORDER BY wikiviews.views DESC LIMIT ?",
+                                params[:month], params[:year], $special_exclude_list, size]
+    render :json => @wikis.to_json(:only => [:project, :page, :year, :month, :day, :views, :bytes])
   end
 
+  # add a top_year -> 'data/top/year'
+
   # get 'data/project/:project/page/:page' => 'wikis#search'
+  # change to search_page
   def search
     @wikis = Wiki.where("project = ? AND page = ?", params[:project], params[:page])
     render :json => @wikis.to_json(:only => [:project, :page], :include => {:wikiviews => {:only => [:year, :month, :day, :views, :bytes]}})
   end
 
   # get 'data/page/:page/year/:year/month/:month' => 'wikis#page_month'
+  # change to search_page_month
   def page_month
-    @wikis = Wiki.joins(:wikiviews).where("page = ? AND year = ? AND month = ?", params[:page], params[:year], params[:month]).distinct
-    render :json => @wikis.to_json(:only => [:project, :page], :include => {:wikiviews => {:only => [:year, :month, :day, :views, :bytes]}})
+    @wikis = Wiki.find_by_sql ["select * from wikis inner join wikiviews on wikiviews.wiki_id = wikis.id
+                                where wikis.page = ? AND wikiviews.month = ? AND wikiviews.year = ?",
+                                params[:page], params[:month], params[:year]]
+    render :json => @wikis.to_json(:only => [:project, :page, :year, :month, :day, :views, :bytes])
   end
 
   # get 'data/compare/project/:project/page/:page' => 'wikis#compare'
+  # DONT NEED. Just make two calls to page_month
   def compare
     @wikis = Wiki.where("project = ? AND page = ?", params[:project], params[:page])
     render :json => @wikis.to_json(:only => [:project, :page], :include => {:wikiviews => {:only => [:year, :month, :day, :views, :bytes]}})
   end
 
+  # add uri comment
   def mobile
     @mobiles = Wiki.joins(:wikiviews).where("project = 'en.mw'").distinct
     render :json => @mobiles.to_json(:only => [:project, :page], :include => {:wikiviews => {:only => [:year, :month, :day, :views, :bytes]}})
