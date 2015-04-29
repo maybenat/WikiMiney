@@ -1,98 +1,37 @@
-function compare(month, year, numIn) {
-  var pages, jsonData, frequencies, drilldownSeries, pagesData, date, dayData, regress, byteSize, byteArr;
-  var json = $.getJSON("/data/search/project/" + "en" + "/page/" + page + "/year/" + year + "/month/" + month,
-    function() {
-      // Get top 50 most viewed pages in year and month
-      jsonData = json.responseJSON;
+function compareMonths(page, month_r, year_r, month_b, year_b) {
+  var url_r = "/data/search/project/en/page/" + page + "/year/" + year_r + "/month/" + month_r;
+  var url_b = "/data/search/project/en/page/" + page + "/year/" + year_b + "/month/" + month_b;
 
-      // Initialize
-      arr = [];
-      frequencies = [];
-      pages = [];
-      byteSize = [];
-      pagesData = [];
-      drilldownSeries = [];
-      date = [];
-      dayData = [];
-      byteArr = [];
-      regress = [];
+  $.when($.getJSON(url_r), $.getJSON(url_b)).done(
+    function(json_r, json_b) {
+      var res_r = json_r[0][0];
+      var res_b = json_b[0][0];
 
-      // For each page
-      for (var j in jsonData) {
-        pages[j] = jsonData[j].page;
-        test = [];
-        test = jsonData[j].wikiviews[0].views;
+      var cats_r = build_categories_by_month(month_r, year_r);
+      var cats_b = build_categories_by_month(month_b, year_b);
+      var cats = build_categories_for_days();
 
-        // Load each all of the day views for each page within a month
-        for (var k in jsonData[j].wikiviews) {
-          if (!date[jsonData[j].page]) {
-            date[jsonData[j].page] = [];
-          }
-          var day = jsonData[j].wikiviews[k].day;
+      var toPlot_r = [];
+      var toPlot_b = [];
 
-          var monthy = jsonData[j].wikiviews[k].month;
-          var temp = month.toString();
+      if (res_r) {
+        var jsonData_r = res_r["wikiviews"];
+        toPlot_r = build_column_data_with_cats(jsonData_r, cats_r);
+      }
 
-          if ((monthy === temp) && (day === "all")) {
-            frequencies[j] = jsonData[j].wikiviews[k].views;
-          }
-
-          if (!(day === "all")) {
-            date[jsonData[j].page].push([jsonData[j].wikiviews[k].month + "/" + day, jsonData[j].wikiviews[k].views]);
-            if (!dayData[jsonData[j].page]) {
-              dayData[jsonData[j].page] = [];
-            }
-
-            var numViews = jsonData[j].wikiviews[k].views;
-            var numBytes = jsonData[j].wikiviews[k].bytes;
-
-            numBytes = numBytes.toFixed(2);
-            if (!byteArr[jsonData[j].page]) {
-              byteArr[jsonData[j].page] = [];
-            }
-            byteArr[jsonData[j].page].push(numBytes);
-            dayData[jsonData[j].page].push(numViews);
-
-            byteSize.push({
-              name: pages[j],
-              id: pages[j],
-              data: byteArr[pages[j]]
-            });
-
-            drilldownSeries.push({
-              name: pages[j],
-              id: pages[j],
-              data: date[pages[j]],
-            });
-          }
-        }
-
-        var fullBytes = (jsonData[j].wikiviews[k].bytes) / numViews;
-        fullBytes = fullBytes.toFixed(2);
-
-        regress.push({
-          name: pages[j],
-          id: pages[j],
-          x: parseFloat(fullBytes),
-          y: parseFloat(frequencies[j])
-        });
-
-        pagesData.push({
-          name: pages[j],
-          y: frequencies[j],
-          drilldown: date[pages[j]] ? pages[j] : null
-        });
+      if (res_b) {
+        var jsonData_b = json_b[0][0]["wikiviews"];
+        toPlot_b = build_column_data_with_cats(jsonData_b, cats_b);
       }
 
       // Create the histogram
-      $('#histogram').highcharts({
+      $('#compare').highcharts({
         chart: {type: 'column'},
-        title: {text: 'Wiki Views'},
-        xAxis: {type: 'category'},
+        title: {text: page + " on " + month_r + "/" + year_r + " vs. " + month_b + "/" + year_b},
+        xAxis: { categories: cats, crosshair: true },
         yAxis: {
           title: {text: 'Total Views'}
         },
-        legend: {enabled: true},
         plotOptions: {
           spline: {
             shadow: false,
@@ -104,92 +43,73 @@ function compare(month, year, numIn) {
             shadow: false,
             marker: {radius: 1}
           },
-          series: {
-            borderWidth: 0,
-            dataLabels: {enabled: false}
-          }
         },
         series: [{
-          name: 'Frequencies',
-          colorByPoint: true,
-          data: pagesData,
+          name: month_r + "/dd/" + year_r,
+          color: '#d9534f',
+          data: toPlot_r,
         }, {
-          name: 'Curve',
-          type: 'spline',
-          visible: false,
-          data: frequencies,
-        }, {
-          name: 'Filled Curve',
-          type: 'areaspline',
-          visible: false,
-          data: frequencies,
+          name: month_b + "/dd/" + year_b,
+          color: '#428bca',
+          data: toPlot_b,
         }],
-        drilldown: {
-          series: drilldownSeries,
-        }
       });
+    }
+  )
+}
 
-      // Create the regression
-      $('#regression').highcharts({
-        chart: {
-          type: 'scatter',
-          zoomType: 'xy'
-        },
-        title: {text: 'Top Page vs Views Regression Line'},
-        xAxis: {
-          title: {
-            enabled: true,
-            text: 'Bytes'
-          },
-          showLastLabel: true
-        },
+
+function comparePages(page_r, page_b, month, year) {
+  var url_r = "/data/search/project/en/page/" + page_r + "/year/" + year + "/month/" + month;
+  var url_b = "/data/search/project/en/page/" + page_b + "/year/" + year + "/month/" + month;
+
+  $.when($.getJSON(url_r), $.getJSON(url_b)).done(
+    function(json_r, json_b) {
+      var res_r = json_r[0][0];
+      var res_b = json_b[0][0];
+
+      var cats = build_categories_by_month(month, year);
+      var toPlot_r = [];
+      var toPlot_b = [];
+
+      if (res_r) {
+        var jsonData_r = res_r["wikiviews"];
+        toPlot_r = build_column_data_with_cats(jsonData_r, cats);
+      }
+
+      if (res_b) {
+        var jsonData_b = json_b[0][0]["wikiviews"];
+        toPlot_b = build_column_data_with_cats(jsonData_b, cats);
+      }
+
+      // Create the histogram
+      $('#compare').highcharts({
+        chart: {type: 'column'},
+        title: {text: page_r + " vs. " + page_b + " for " + month + "/" + year },
+        xAxis: { categories: cats, crosshair: true },
         yAxis: {
-          title: {text: 'Views'}
-        },
-        legend: {
-          layout: 'vertical',
-          align: 'left',
-          verticalAlign: 'top',
-          floating: true,
-          backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF',
-          borderWidth: 1
+          title: {text: 'Total Views'}
         },
         plotOptions: {
-          scatter: {
-            marker: {
-              radius: 5,
-              states: {
-                hover: {
-                  enabled: true,
-                  lineColor: 'rgb(100,100,100)'
-                }
-              }
-            },
-            states: {
-              hover: {
-                marker: {enabled: false}
-              }
-            },
-            tooltip: {
-              headerFormat: '',
-              pointFormat: '<b> {point.name} </b> Bytes: {point.x}, {point.y} views'
-            },
-            events: {
-              click: function(event, i) {
-                var win = window.open("http://www.en.wikipedia.org/wiki/" + event.point.name, '_blank');
-                win.focus();
-              }
-            },
-          }
+          spline: {
+            shadow: false,
+            marker: {radius: 1}
+          },
+          areaspline: {
+            color: 'rgb(69, 114, 167)',
+            fillColor: 'rgba(69, 114, 167,.25)',
+            shadow: false,
+            marker: {radius: 1}
+          },
         },
         series: [{
-          regression: true,
-          regressionSettings: {
-            type: 'linear',
-            color: 'rgba(223, 83, 83, .9)',
-          },
-          colorByPoint: true,
-          data: regress,
+          name: page_r,
+          color: '#d9534f',
+          data: toPlot_r,
+        }, {
+          name: page_b,
+          color: '#428bca',
+          data: toPlot_b,
         }],
       });
     }
