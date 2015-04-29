@@ -1,10 +1,26 @@
 function getCluster() {
   var json = $.getJSON("/data/cluster/2008/october",
     function() {
+      jsonData = json.responseJSON;
       toPlot = [];
-      for (var i = 0; i < 10; i++) { 
-        toPlot.push([i, i]);
+
+      clusts = [[], [], [], [], []];
+
+      for (var index in jsonData) {
+        page = jsonData[index]
+        clst = parseInt(page["cluster"])
+        clusts[clst].push({
+          name: page["page"],
+          x: page["views"],
+          y: Math.round(page["bytes"] / page["views"])
+        });
       }
+
+      toPlot.push({name: "Cluster 1", color: 'rgba(255, 0, 0, 0.5)', data: clusts[0]});
+      toPlot.push({name: "Cluster 2", color: 'rgba(0, 255, 0, 0.5)', data: clusts[1]});
+      toPlot.push({name: "Cluster 3", color: 'rgba(0, 0, 255, 0.5)', data: clusts[2]});
+      toPlot.push({name: "Cluster 4", color: 'rgba(255, 0, 255, 0.5)', data: clusts[3]});
+      toPlot.push({name: "Cluster 5", color: 'rgba(0, 255, 255, 0.5)', data: clusts[4]});
 
       // Create the clusters
       $('#cluster').highcharts({
@@ -12,27 +28,20 @@ function getCluster() {
           type: 'scatter',
           zoomType: 'xy'
         },
-        title: {text: 'Cluster'},
+        title: {text: 'K-means++ Cluster'},
         xAxis: {
           title: {
             enabled: true,
-            text: 'Bytes'
+            text: 'Views'
           },
           showLastLabel: true
         },
         yAxis: {
-          title: {text: 'Views'}
-        },
-        legend: {
-          layout: 'vertical',
-          align: 'left',
-          verticalAlign: 'top',
-          floating: true,
-          backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF',
-          borderWidth: 1
+          title: {text: 'Bytes'}
         },
         plotOptions: {
           scatter: {
+            turboThreshold: 0,
             marker: {
               radius: 5,
               states: {
@@ -49,7 +58,7 @@ function getCluster() {
             },
             tooltip: {
               headerFormat: '',
-              pointFormat: '<b>{point.name}</b> Bytes: {point.x}, {point.y} views'
+              pointFormat: '<b>{point.name}</b><br>{point.x} views, {point.y} bytes'
             },
             events: {
               click: function(event, i) {
@@ -59,9 +68,7 @@ function getCluster() {
             },
           }
         },
-        series: [{
-          data: toPlot,
-        }],
+        series: toPlot,
       });
     }
   )

@@ -1,14 +1,4 @@
 <script>
-function getData() {
-  var month = document.getElementById("month-value").value;
-  var year = document.getElementById("year-value").value;
-  var pages = document.getElementById("pages-value").value;
-
-  if (parseInt(month) && parseInt(year) && parseInt(pages)) {
-    getTop(month, year, pages);
-  }
-}
-
 getTop(10, 2008, 10);
 </script>
 
@@ -42,7 +32,9 @@ getTop(10, 2008, 10);
   <div class="col-md-11">
     <div class="pad-below">
       <div class="gray-back">
-        <div id="histogram" class="cust-graph"></div>
+        <div id="histogram" class="cust-graph">
+          <img src="/assets/loading.gif" class="pull-right" />
+        </div>
         <hr />
         <div id="regression" class="cust-graph"></div>
       </div>
