@@ -28,7 +28,7 @@ function getCluster() {
           type: 'scatter',
           zoomType: 'xy'
         },
-        title: {text: 'K-means++ Cluster'},
+        title: {text: 'Page Popularity vs. Page Size<br>using K-means++ Cluster'},
         xAxis: {
           title: {
             enabled: true,

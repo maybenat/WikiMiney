@@ -2,98 +2,63 @@
 <h5>All of the things about this project that might need some explaining.<h5>
 <hr />
 
+<div class="row pad-below">
+  <div class="col-md-8">
+    <p>
+      The most important note is that when this project began, we were working with 1.3TB. A lot of data has since
+      been stripped out to make this manageable. Unfortunately, this means many of the graphs look incomplete
+      because some of the data got stripped away. We tried to only remove data for pages with small numbers of views
+      so that only the obscure and unpopular pages were removed, but this appears to not be true in all cases.
+    </p>
+  </div>
+</div>
 
-Add stuff from Readme, Todo, User Guide... all .md files on github
-
-<%= $special_exclude_list %>
-
-
-
-
-
-README
-# WikiMiney
-This is the repository for the [CS 5140 Data Mining](http://www.cs.utah.edu/~jeffp/teaching/cs5140.html)
-final project at The University of Utah. We are analyzing Wikipedia page view statistics and are building
-an interactive site with a series of graphs and charts to help visualize this massive collection of data.
-We soon hope to have the site up and running with AWS [here](#).
-
-
-### Dependencies
-* [RVM](http://rvm.io)
-
-
-### Getting This Rails App Running Locally
-Processing all of the data has taken enormous effort. We currently have a directory of preprocessed data
-sitting in a directory on AWS.
-
-```
-git clone https://github.com/nataliemcmullen/WikiMiney.git wikiminey
-cd wikiminey
-rvm use --create --rvmrc 2.2@wikiminey
-rvm rvmrc warning ignore '/path/to/wikiminey/.rvmrc'
-bundle install
-```
-
-If you have access to our AWS account just do
-
-```
-rake db:create
-rake db:migrate
-scp <aws_ip>:sqlite_snapshots/<x>.sqlite3 db/development.sqlite3
-rails server
-```
-
-Otherwise,
-Follow instructions in [Data Download](DATA_DL.md). This will take a LONG time to get actual data.
-The rake db:setup command will take a long time to populate the database if you followed the scripts in the
-Data Download wiki for all six months
-
-```
-rake db:migrate
-rake db:setup
-rails server
-```
+<h3>Data Download</h3>
+<div class="row pad-below">
+  <div class="col-md-8">
+    <p>
+      There were a handful of scripts written to download the data, process it, strip it down,
+      and get it into a manageable format to work with this app. The data all came from the 
+      <a href="http://dumps.wikimedia.org/other/pagecounts-raw">Wikimedia Dumps</a>. More information
+      can be found <a href="http://wikitech.wikimedia.org/wiki/Analytics/Data/Pagecounts-raw">here</a>.
+      We selected six months to process October, November, and December of 2008 and 2012.
+    </p>
+    <p>
+      Processing all of the data has taken enormous effort. We currently have a directory of preprocessed data
+      sitting in a directory on AWS.
+    </p>
+    <p>
+      Follow instructions in <a href="http://github.com/nataliemcmullen/WikiMiney/blob/master/DATA_DL.md">Data Download</a>.
+      This will take a LONG time to get actual data.
+    </p>
+  </div>
+</div>
 
 
+<h3>Overview of Data Processing</h3>
+<ul class="pad-below">
+  <li>Data downloaded in its entirety</li>
+  <li>Data uncompressed of the gzip format</li>
+  <li>Data stripped of everything except for English projects</li>
+  <li>Data aggregated from hourly files to daily files</li>
+  <li>Data stripped of everything with less than 20 views per day</li>
+  <li>Data aggregated to additional monthly file</li>
+  <li>Data stripped of everything with less than 5000 views</li>
+  <li>Final data files added to ready-for-db/ directories for each month</li>
+  <li class="list-unstyled"><small>Note: This will seriously take weeks and about 1.3TB, initially. Be prepared.</small></li>
+</ul>
 
 
-# Data Download
-There were a handful of scripts written to download the data, process it, strip it down,
-and get it into a manageable format to work with this app. The data all came from the 
-[Wikimedia Dumps](http://dumps.wikimedia.org/other/pagecounts-raw). More information
-can be found [here](http://wikitech.wikimedia.org/wiki/Analytics/Data/Pagecounts-raw).
-We selected six months to process October, November, and December of 2008 and 2012.
+<h3>General Site Notes</h3>
+<ul>
+  <li>There are only 6 months of data being looked at total</li>
+  <li>Anywhere that says "All Views from 20xx" is only accounting for the months of October, November, and December</li>
+  <li>Below is a list of all of the page names that are currently being excluded from any json response</li>
+</ul>
 
-
-
-### Overview
-* Data downloaded in its entirety
-* Data uncompressed of the gzip format
-* Data stripped of everything except for English projects
-* Data aggregated from hourly files to daily files
-* Data stripped of everything with less than 20 views per day
-* Data aggregated to additional monthly file
-* Data stripped of everything with less than 5000 views
-* Final data files added to ready-for-db/ directories for each month
-
-
-
-### To Execute
-The following scripts need to be executed in this exact order. The final text files
-will be located in an inner ready-for-db/ directory. Each set of scripts can be found
-in db/data/*year*/*month*.
-When rake:seed is called, the files within db/data/*year*/*month*/ready-for-db will be
-added to a SQLite3 database
-
-Note: This will seriously take weeks and about 1.3TB, initially. Be prepared.
-
-```
-cd db/data/<year>/<month>/
-python get_gzs.py
-python process.py
-python queue-gregate.py
-python strip-small.py
-python month-gregate.py
-python prep-for-db.py
-```
+<div class="row">
+  <div class="col-md-1"></div>
+  <div class="col-md-4">
+    <%= select_tag "excludes", options_for_select($special_exclude_list), { :class => 'form-control' } %>
+  </div>
+</div>
