@@ -2,8 +2,9 @@ function search(month, year, dayIn, page, project) {
     var pages, jsonData, frequencies, drilldownSeries, pagesData, date, dayData, regress, byteSize, byteArr;
     var json = $.getJSON("/data/search/project/" + project + "/page/" + page + "/year/" + year + "/month/" + month,
         function() {
-            // Get top 50 most viewed pages in year and month
             jsonData = json.responseJSON;
+            console.log(jsonData);
+            console.log(project);
             // Initialize
             arr = [];
             frequencies = [];
@@ -138,8 +139,6 @@ function search(month, year, dayIn, page, project) {
                     series: drilldownSeries,
                 }
             });
-
-            // Create the regression
 
         }
     )
