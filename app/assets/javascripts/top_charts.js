@@ -87,7 +87,7 @@ function getTop(month, year, numIn) {
       // Create the histogram
       $('#histogram').highcharts({
         chart: {type: 'column'},
-        title: {text: 'Wiki Views'},
+        title: {text: numIn + ' Most Viewed Pages for ' + month + '/' + year},
         xAxis: {type: 'category'},
         yAxis: {
           title: {text: 'Total Views'}
@@ -110,19 +110,9 @@ function getTop(month, year, numIn) {
           }
         },
         series: [{
-          name: 'Frequencies',
+          name: 'Pages',
           colorByPoint: true,
           data: pagesData,
-        }, {
-          name: 'Curve',
-          type: 'spline',
-          visible: false,
-          data: frequencies,
-        }, {
-          name: 'Filled Curve',
-          type: 'areaspline',
-          visible: false,
-          data: frequencies,
         }],
         drilldown: {
           series: drilldownSeries,
@@ -135,7 +125,7 @@ function getTop(month, year, numIn) {
           type: 'scatter',
           zoomType: 'xy'
         },
-        title: {text: 'Top Page vs Views Regression Line'},
+        title: {text: 'Page Size vs. Views with Regression'},
         xAxis: {
           title: {
             enabled: true,
@@ -145,14 +135,6 @@ function getTop(month, year, numIn) {
         },
         yAxis: {
           title: {text: 'Views'}
-        },
-        legend: {
-          layout: 'vertical',
-          align: 'left',
-          verticalAlign: 'top',
-          floating: true,
-          backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF',
-          borderWidth: 1
         },
         plotOptions: {
           scatter: {
@@ -183,6 +165,7 @@ function getTop(month, year, numIn) {
           }
         },
         series: [{
+          name: "Pages",
           regression: true,
           regressionSettings: {
             type: 'linear',

@@ -74,7 +74,7 @@ function getIndex(year, amount) {
           }
         },
         series: [{
-          name: 'Frequencies',
+          name: 'Pages',
           colorByPoint: true,
           data: pagesData,
         }],
