@@ -1,8 +1,8 @@
 # WikiMiney
 This is the repository for the [CS 5140 Data Mining](http://www.cs.utah.edu/~jeffp/teaching/cs5140.html)
 final project at The University of Utah. We are analyzing Wikipedia page view statistics and are building
-an interactive site with a series of graphs and charts the help visualize this massive collection of
-data. We soon hope to have the site up and running with AWS [here](#).
+an interactive site with a series of graphs and charts to help visualize this massive collection of data.
+We soon hope to have the site up and running with AWS [here](#).
 
 
 ### Dependencies
