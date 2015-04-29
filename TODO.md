@@ -8,3 +8,7 @@
 
 ### Frontend
 * Get all of the graphs and pages set up. Do it
+* Order the bar char from most to least on "Top" and "Index" page
+* Screenshot final pages and add to "Poster" page with analysis
+* Get Compage Page Working
+* Get Search Page working

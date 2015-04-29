@@ -1,4 +1,4 @@
-/* Frequently used functions */
+/* Frequently used helper functions */
 
 function getData() {
   var month = document.getElementById("month-value").value;
@@ -44,4 +44,12 @@ function toggleTab(tab) {
     document.getElementById('pages-per-month').style.display = "block";
     document.getElementById('page-over-months').style.display = "none";
   }
+}
+
+function index_sort_by_y(a,b) {
+  if (a.y < b.y)
+    return 1;
+  if (a.y > b.y)
+    return -1;
+  return 0;
 }
