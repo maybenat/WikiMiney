@@ -11,6 +11,9 @@ var project_s = document.getElementById("project").value;
 
 
 if (parseInt(month_s) && parseInt(year_s)) {
+page_s = page_s.toString();
+page_s = page_s.replace(/\s/g, '_');
+console.log(page_s);
 search(month_s, year_s, day_s, page_s, project_s);
 }
 

@@ -3,9 +3,6 @@ function search(month, year, dayIn, page, project) {
     var json = $.getJSON("/data/search/project/" + project + "/page/" + page + "/year/" + year + "/month/" + month,
         function() {
             jsonData = json.responseJSON;
-            console.log(jsonData);
-            console.log(project);
-            // Initialize
             arr = [];
             frequencies = [];
             pages = [];
@@ -23,8 +20,6 @@ function search(month, year, dayIn, page, project) {
             }
 
 
-
-            console.log(project);
             // For each page
             for (var j in jsonData) {
                 var projecty = jsonData[j].project;
@@ -44,11 +39,9 @@ function search(month, year, dayIn, page, project) {
                     var temp = month.toString();
 
                     if ((monthy === temp) && (day === "all")) {
-                        console.log("ASd");
                         frequencies[j] = jsonData[j].wikiviews[k].views;
                     }
                     if ((monthy === temp) && (day === dayIn)) {
-                        console.log("hi natalie");
                         myDay[j] = jsonData[j].wikiviews[k].views;
                     }
 
