@@ -27,7 +27,6 @@ function search(month, year, dayIn, page, project) {
             // For each page
             for (var j in jsonData) {
                 var projecty = jsonData[j].project;
-                console.log(projecty);
                 pages[j] = jsonData[j].page;
                 test = [];
                 test = jsonData[j].wikiviews[0].views;
@@ -47,7 +46,7 @@ function search(month, year, dayIn, page, project) {
                         console.log("ASd");
                         frequencies[j] = jsonData[j].wikiviews[k].views;
                     }
-                    if ((monthy === temp) && (day === dayIn)&& (projecty === project)) {
+                    if ((monthy === temp) && (day === dayIn)) {
                         console.log("hi natalie");
                         myDay[j] = jsonData[j].wikiviews[k].views;
                     }
