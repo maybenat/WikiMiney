@@ -1,6 +1,6 @@
 function getTop(month, year, numIn) {
   var pages, jsonData, frequencies, drilldownSeries, pagesData, date, dayData, regress, byteSize, byteArr;
-  var json = $.getJSON("/data/year/" + year + "/month/" + month + "/top/" + numIn,
+  var json = $.getJSON("/data/top/" + numIn + "/year/" + year + "/month/" + month,
     function() {
       // Get top 50 most viewed pages in year and month
       jsonData = json.responseJSON;

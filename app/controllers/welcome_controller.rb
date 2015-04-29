@@ -26,7 +26,6 @@ class WelcomeController < ApplicationController
   $projects.push(['Wikiversity', 'en.v'])
   $projects.push(['Mediawiki', 'en.w'])
 
-
   def index
   end
 
@@ -48,7 +47,6 @@ class WelcomeController < ApplicationController
     @days = $days
     @years = $years
     @projects = $projects
-    
   end
 
   def poster
