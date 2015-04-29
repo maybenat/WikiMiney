@@ -7,6 +7,7 @@
 * Bug on wikis#top -> data is sometimes not order according to all
 
 ### Frontend
+* Fix titles and stuff on "Top" charts
 * Get all of the graphs and pages set up. Do it
 * Order the bar char from most to least on "Top" and "Index" page
 * Screenshot final pages and add to "Poster" page with analysis
