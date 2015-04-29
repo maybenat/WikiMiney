@@ -26,6 +26,11 @@ body {
   min-width: 310px
 }
 
+.cluster-graph {
+  height: 600px;
+  min-width: 310px
+}
+
 .phat-vert {
   padding-top: 20%;
 }

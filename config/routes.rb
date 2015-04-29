@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   get 'poster' => 'welcome#poster'
   get 'about' => 'welcome#about'
   get 'mobile' => 'welcome#mobile'
+  get 'footnote' => 'welcome#footnote'
 
   # json responses
   get 'data/top/:size/year/:year' => 'top#year'

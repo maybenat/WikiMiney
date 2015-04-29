@@ -5,17 +5,21 @@ class WelcomeController < ApplicationController
   $months.push(['December', '12'])
 
   $days = []
-  for i in 1..31
-    $days.push([i, i])
-  end
   $days.push(['Entire Month Aggregate', 'all'])
+  for i in 1..31
+    day = i.to_s
+    if i < 10
+      day = "0" + i.to_s
+    end
+    $days.push([i, day])
+  end
 
   $years = []
   $years.push(['2008', '2008'])
   $years.push(['2012', '2012'])
 
   $projects = []
-  $projects.push(['English', 'en'])
+  $projects.push(['Wikipedia', 'en'])
   $projects.push(['Wikibooks', 'en.b'])
   $projects.push(['Wiktionary', 'en.d'])
   $projects.push(['Wikimedia', 'en.m'])
@@ -52,9 +56,12 @@ class WelcomeController < ApplicationController
   def poster
   end
 
+  def mobile
+  end
+
   def about
   end
 
-  def mobile
+  def footnote
   end
 end

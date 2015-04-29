@@ -26,7 +26,14 @@ class ApplicationController < ActionController::Base
     "/Talk:Main_Page",
     "Undefined",
     "undefined",
-    "/Wikipedia:Your_first_article"
+    "/Wikipedia:Your_first_article",
+    "File:Marvel_1602.jpg",
+    "File:Beograd_7642.jpg",
+    "Wiktionary:Main_Pag%12",
+    "Wiktionary:Main_Pag%04",
+    "%5Bobject_Object%5D",
+    "Main_Page/",
+    "500.shtml"
   ]
 
   # just a helper method for parsing json

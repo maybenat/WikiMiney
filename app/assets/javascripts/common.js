@@ -156,3 +156,18 @@ function compMo() {
     compareMonths(page, month_r, year_r, month_b, year_b);
   }
 }
+
+function runSearch() {
+  var month = document.getElementById("month").value;
+  var year = document.getElementById("year").value;
+  var day = document.getElementById("day").value;
+  var page = document.getElementById("pages-value").value;
+  var project = document.getElementById("project").value;
+
+  if (month && year && day && page && project) {
+    hideShowCompareHelp();
+    page = page.toString();
+    page = page.replace(/\s/g, '_');
+    search(month, year, day, page, project);
+  }
+}
