@@ -19,11 +19,14 @@ class WikisController < ApplicationController
     "Wsearch.php",
     "index.php",
     "/Talk:Main_Page",
+    "Undefined",
+    "undefined",
   ]
 
   def index
     @wikis = Wiki.joins(:wikiviews).where("day = 'all' AND page NOT IN (?)", $special_exclude_list).order('views DESC, page').distinct.take(25)
   end
+
 
   def show
     @wiki = Wiki.find(params[:id])
@@ -56,18 +59,47 @@ class WikisController < ApplicationController
     end
   end
 
+
+  # just a helper method for parsing json
+  # PS: This is hideous
+  def json_strip_views(json, month_param, year_param)
+    ini_hash = JSON.parse(json)
+    ret_hash = []
+
+    # God, this is so ugly... I'm ashamed. I'm so sorry...
+    ini_hash.each do |page|
+      wvs = []
+      page["wikiviews"].each do |view|
+        if view["month"] == month_param && view["year"] == year_param
+          wvs.push(view)
+        end
+      end
+      ret_hash.push({"project" => page["project"], "page" => page["page"], "wikiviews" => wvs})
+    end
+    ret_json = ret_hash.to_json
+    return ret_json
+  end
+
+
   # get 'data/year/:year/month/:month/top/:size' => 'wikis#top'
   # change to top_month and fix url -> 'data/top/year/month'
-  def top
+
+  # Okay, so here's what's going on:
+  #   I want the top <size> pages in a specific month and year. After the ActiveRecord .where() call, @wikis contains
+  #   all of the correct pages. But I also want the information in the wikiviews table to be included in the returned
+  #   json. The problem is that the to_json() call finds *all* of the associated wikiviews for each page, even the ones
+  #   outside of the month and year constraints. So to_json() gets all of the information we want (plus a little extra)
+  #   and then I loop through that json hash and strip out all of the uneccessary data.
+  def top #_month
     size = params[:size].to_i
     if size > 70
       size = 70
     end
-    @wikis = Wiki.find_by_sql ["SELECT * FROM wikis INNER JOIN wikiviews ON wikiviews.wiki_id = wikis.id
-                                WHERE wikiviews.month = ? AND wikiviews.year = ? AND wikis.page NOT IN (?)
-                                ORDER BY wikiviews.views DESC LIMIT ?",
-                                params[:month], params[:year], $special_exclude_list, size]
-    render :json => @wikis.to_json(:only => [:project, :page, :year, :month, :day, :views, :bytes])
+    @wikis = Wiki.joins(:wikiviews).where("year = ? AND month = ? AND day = 'all' AND page NOT IN (?)",
+            params[:year], params[:month], $special_exclude_list).distinct.order('views DESC, page').take(size)
+    json = @wikis.to_json(:only => [:project, :page], :include => {:wikiviews => {:only => [:year, :month, :day, :views, :bytes]}})
+    ret_json = json_strip_views(json, params[:month], params[:year])
+    render :json => ret_json
   end
 
   # add a top_year -> 'data/top/year'
@@ -81,11 +113,12 @@ class WikisController < ApplicationController
 
   # get 'data/page/:page/year/:year/month/:month' => 'wikis#page_month'
   # change to search_page_month
+  # look at comment for top_month for what's going on
   def page_month
-    @wikis = Wiki.find_by_sql ["select * from wikis inner join wikiviews on wikiviews.wiki_id = wikis.id
-                                where wikis.page = ? AND wikiviews.month = ? AND wikiviews.year = ?",
-                                params[:page], params[:month], params[:year]]
-    render :json => @wikis.to_json(:only => [:project, :page, :year, :month, :day, :views, :bytes])
+    @wikis = Wiki.joins(:wikiviews).where("page = ? AND month = ? AND year = ?", params[:page], params[:month], params[:year]).distinct
+    json = @wikis.to_json(:only => [:project, :page], :include => {:wikiviews => {:only => [:year, :month, :day, :views, :bytes]}})
+    ret_json = json_strip_views(json, params[:month], params[:year])
+    render :json => ret_json
   end
 
   # get 'data/compare/project/:project/page/:page' => 'wikis#compare'
