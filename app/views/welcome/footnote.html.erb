@@ -50,15 +50,21 @@
 
 
 <h3>General Site Notes</h3>
-<ul>
-  <li>There are only 6 months of data being looked at total</li>
-  <li>Anywhere that says "All Views from 20xx" is only accounting for the months of October, November, and December</li>
-  <li>Below is a list of all of the page names that are currently being excluded from any json response</li>
-</ul>
+<div class="row pad-below">
+  <div class="col-md-8">
+    <ul>
+      <li>There are only 6 months of data being looked at total</li>
+      <li>Anywhere that says "All Views from 20xx" is only accounting for the months of October, November, and December</li>
+      <li>Only pages that have more than 5000 views in a day are available in our database. This was done to reduce the data to a manageable size.</li>
+      <li>Below is a list of all of the page names that are currently being excluded from any json response</li>
+    </ul>
 
-<div class="row">
-  <div class="col-md-1"></div>
-  <div class="col-md-4">
-    <%= select_tag "excludes", options_for_select($special_exclude_list), { :class => 'form-control' } %>
+    <div class="row">
+      <div class="col-md-1"></div>
+      <div class="col-md-4">
+        <%= select_tag "excludes", options_for_select($special_exclude_list), { :class => 'form-control' } %>
+      </div>
+    </div>
+
   </div>
 </div>
